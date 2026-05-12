@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>MochiMozz Marketplace</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins', sans-serif;
+      background:#fff8f3;
+      color:#2d2d2d;
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+    }
+
+    /* TOP BAR */
+
+    .topbar{
+      background:#1f1f1f;
+      color:white;
+      padding:10px 8%;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      font-size:14px;
+    }
+
+    .topbar span{
+      opacity:0.85;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:white;
+      padding:18px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .logo{
+      font-size:30px;
+      font-weight:800;
+      color:#ff7b00;
+    }
+
+    nav ul{
+      display:flex;
+      gap:28px;
+      list-style:none;
+    }
+
+    nav ul li a{
+      color:#333;
+      font-weight:500;
+      transition:0.3s;
+    }
+
+    nav ul li a:hover{
+      color:#ff7b00;
+    }
+
+    .nav-btn{
+      padding:12px 24px;
+      background:#ff9f43;
+      border-radius:40px;
+      color:white;
+      font-weight:600;
+      transition:0.3s;
+    }
+
+    .nav-btn:hover{
+      background:#ff7b00;
+    }
+
+    /* HERO */
+
+    header{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding:120px 8%;
+      background:
+      linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url('https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1800&auto=format&fit=crop');
+
+      background-size:cover;
+      background-position:center;
+      color:white;
+    }
+
+    .hero{
+      max-width:750px;
+      animation:fade 1.2s ease;
+    }
+
+    .hero-badge{
+      display:inline-block;
+      padding:10px 18px;
+      background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.2);
+      backdrop-filter:blur(8px);
+      border-radius:40px;
+      margin-bottom:25px;
+      font-size:14px;
+    }
+
+    .hero h1{
+      font-size:78px;
+      line-height:1.1;
+      margin-bottom:25px;
+      font-weight:800;
+    }
+
+    .hero p{
+      font-size:19px;
+      line-height:1.9;
+      opacity:0.95;
+      margin-bottom:40px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:16px 34px;
+      border-radius:50px;
+      font-weight:600;
+      transition:0.3s;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:#ff9f43;
+      color:white;
+      box-shadow:0 12px 25px rgba(255,159,67,0.35);
+    }
+
+    .btn-primary:hover{
+      background:#ff7b00;
+      transform:translateY(-5px);
+    }
+
+    .btn-secondary{
+      border:1px solid rgba(255,255,255,0.4);
+      color:white;
+      backdrop-filter:blur(6px);
+    }
+
+    .btn-secondary:hover{
+      background:white;
+      color:#333;
+    }
+
+    /* FEATURE */
+
+    .features{
+      margin-top:-70px;
+      padding:0 8%;
+      position:relative;
+      z-index:10;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:25px;
+    }
+
+    .feature-card{
+      background:white;
+      padding:30px;
+      border-radius:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .feature-card h3{
+      margin:15px 0;
+      color:#ff7b00;
+    }
+
+    .feature-card p{
+      color:#666;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    /* SECTION */
+
+    section{
+      padding:100px 8%;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .section-title h2{
+      font-size:48px;
+      color:#ff7b00;
+      margin-bottom:15px;
+    }
+
+    .section-title p{
+      color:#666;
+      max-width:700px;
+      margin:auto;
+      line-height:1.8;
+    }
+
+    /* PRODUCTS */
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+      gap:30px;
+    }
+
+    .product-card{
+      background:white;
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      transition:0.3s;
+    }
+
+    .product-card:hover{
+      transform:translateY(-10px);
+    }
+
+    .product-card img{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+    }
+
+    .product-content{
+      padding:25px;
+    }
+
+    .product-tag{
+      display:inline-block;
+      padding:8px 14px;
+      background:#fff1e4;
+      color:#ff7b00;
+      border-radius:20px;
+      font-size:13px;
+      margin-bottom:15px;
+      font-weight:600;
+    }
+
+    .product-content h3{
+      margin-bottom:10px;
+      font-size:24px;
+    }
+
+    .product-content p{
+      color:#666;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .price{
+      margin-top:18px;
+      font-size:24px;
+      color:#ff7b00;
+      font-weight:700;
+    }
+
+    .buy-btn{
+      width:100%;
+      margin-top:18px;
+      padding:14px;
+      border:none;
+      background:#ff9f43;
+      color:white;
+      border-radius:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .buy-btn:hover{
+      background:#ff7b00;
+    }
+
+    /* SHIPPING */
+
+    .shipping{
+      background:white;
+      border-radius:35px;
+      padding:50px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .shipping-box h3{
+      margin:15px 0;
+      color:#ff7b00;
+    }
+
+    .shipping-box p{
+      color:#666;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    /* FAQ */
+
+    .faq-container{
+      display:grid;
+      gap:20px;
+    }
+
+    .faq{
+      background:white;
+      padding:28px;
+      border-radius:22px;
+      box-shadow:0 10px 20px rgba(0,0,0,0.06);
+    }
+
+    .faq h3{
+      margin-bottom:12px;
+      color:#ff7b00;
+    }
+
+    .faq p{
+      color:#666;
+      line-height:1.8;
+    }
+
+    /* ORDER */
+
+    .order-box{
+      background:white;
+      padding:50px;
+      border-radius:35px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      max-width:850px;
+      margin:auto;
+    }
+
+    form{
+      display:grid;
+      gap:20px;
+    }
+
+    input, textarea, select{
+      padding:16px;
+      border:none;
+      border-radius:16px;
+      background:#f5f5f5;
+      font-family:'Poppins', sans-serif;
+    }
+
+    textarea{
+      resize:none;
+      height:120px;
+    }
+
+    .submit-btn{
+      padding:16px;
+      border:none;
+      border-radius:16px;
+      background:#ff9f43;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .submit-btn:hover{
+      background:#ff7b00;
+    }
+
+    /* FOOTER */
+
+    footer{
+      background:#1d1d1d;
+      color:white;
+      padding:80px 8% 40px;
+      margin-top:100px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:40px;
+    }
+
+    footer h3{
+      color:#ff9f43;
+      margin-bottom:18px;
+    }
+
+    footer p{
+      color:#cfcfcf;
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    .copyright{
+      text-align:center;
+      margin-top:50px;
+      color:#8d8d8d;
+      border-top:1px solid rgba(255,255,255,0.1);
+      padding-top:25px;
+      font-size:14px;
+    }
+
+    @keyframes fade{
+
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    @media(max-width:768px){
+
+      nav{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+
+      .hero h1{
+        font-size:48px;
+      }
+
+      .hero p{
+        font-size:16px;
+      }
+
+      .section-title h2{
+        font-size:36px;
+      }
+
+      .shipping,
+      .order-box{
+        padding:30px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+
+    <span>
+      🚚 Gratis Ongkir Area Kota • Open 09:00 - 22:00
+    </span>
+
+    <span>
+      🍡 Fresh Made Everyday • Premium Mozzarella
+    </span>
+
+  </div>
+
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <div class="logo">
+      MochiMozz
+    </div>
+
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#shipping">Pengiriman</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#order">Order</a></li>
+    </ul>
+
+    <a href="#order" class="nav-btn">
+      Pesan Sekarang
+    </a>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <header id="home">
+
+    <div class="hero">
+
+      <div class="hero-badge">
+        ✨ Marketplace Dessert Modern
+      </div>
+
+      <h1>
+        Mochi Mozarella  
+        Premium Marketplace
+      </h1>
+
+      <p>
+        Marketplace dessert fiksi dengan konsep aesthetic modern,
+        pengiriman cepat, menu premium, dan mozzarella lumer
+        yang level stretch-nya bisa bikin gravitasi iri 🧀
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#menu" class="btn btn-primary">
+          Lihat Menu
+        </a>
+
+        <a href="#faq" class="btn btn-secondary">
+          FAQ
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- FEATURES -->
+
+  <div class="features">
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+
+        <h3>🚚 Fast Delivery</h3>
+
+        <p>
+          Pengiriman instan area kota dengan packaging insulated
+          agar mochi tetap fresh saat sampai.
+        </p>
+
+      </div>
+
+      <div class="feature-card">
+
+        <h3>🧀 Premium Cheese</h3>
+
+        <p>
+          Menggunakan mozzarella premium dengan texture melt
+          yang creamy dan stretchy.
+        </p>
+
+      </div>
+
+      <div class="feature-card">
+
+        <h3>🍡 Handmade Daily</h3>
+
+        <p>
+          Semua mochi dibuat fresh setiap hari
+          untuk menjaga kualitas rasa.
+        </p>
+
+      </div>
+
+      <div class="feature-card">
+
+        <h3>💳 Secure Payment</h3>
+
+        <p>
+          Mendukung transfer bank, e-wallet,
+          dan pembayaran marketplace.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MENU -->
+
+  <section id="menu">
+
+    <div class="section-title">
+
+      <h2>Best Seller Menu</h2>
+
+      <p>
+        Pilihan dessert favorit customer dengan texture chewy
+        dan filling mozzarella yang lumer maksimal.
+      </p>
+
+    </div>
+
+    <div class="products">
+
+      <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?q=80&w=900&auto=format&fit=crop">
+
+        <div class="product-content">
+
+          <div class="product-tag">
+            Best Seller
+          </div>
+
+          <h3>Chocolate Lava</h3>
+
+          <p>
+            Mochi coklat premium dengan mozzarella melt
+            dan dark cocoa filling.
+          </p>
+
+          <div class="price">
+            Rp15.000
+          </div>
+
+          <button class="buy-btn">
+            Tambah ke Keranjang
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1582716401301-b2407dc7563d?q=80&w=900&auto=format&fit=crop">
+
+        <div class="product-content">
+
+          <div class="product-tag">
+            Viral Menu
+          </div>
+
+          <h3>Matcha Melt</h3>
+
+          <p>
+            Matcha creamy dengan sensasi keju lumer
+            dan aroma teh premium Jepang.
+          </p>
+
+          <div class="price">
+            Rp18.000
+          </div>
+
+          <button class="buy-btn">
+            Tambah ke Keranjang
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=900&auto=format&fit=crop">
+
+        <div class="product-content">
+
+          <div class="product-tag">
+            New Release
+          </div>
+
+          <h3>Strawberry Cloud</h3>
+
+          <p>
+            Strawberry cream dengan texture fluffy
+            dan filling mozzarella sweet blend.
+          </p>
+
+          <div class="price">
+            Rp17.000
+          </div>
+
+          <button class="buy-btn">
+            Tambah ke Keranjang
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SHIPPING -->
+
+  <section id="shipping">
+
+    <div class="section-title">
+
+      <h2>Pengiriman & Layanan</h2>
+
+      <p>
+        Sistem marketplace fiksi dengan layanan pengiriman cepat
+        dan customer support aktif setiap hari.
+      </p>
+
+    </div>
+
+    <div class="shipping">
+
+      <div class="shipping-box">
+
+        <h3>🚚 Instant Delivery</h3>
+
+        <p>
+          Area kota mendapatkan layanan pengiriman instan
+          maksimal 1 jam setelah checkout.
+        </p>
+
+      </div>
+
+      <div class="shipping-box">
+
+        <h3>📦 Premium Packaging</h3>
+
+        <p>
+          Packaging thermal layer menjaga kualitas
+          mochi tetap chewy dan fresh.
+        </p>
+
+      </div>
+
+      <div class="shipping-box">
+
+        <h3>💬 Customer Support</h3>
+
+        <p>
+          Tim support tersedia setiap hari
+          untuk membantu order dan komplain.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FAQ -->
+
+  <section id="faq">
+
+    <div class="section-title">
+
+      <h2>Frequently Asked Questions</h2>
+
+      <p>
+        Pertanyaan yang paling sering ditanyakan customer.
+      </p>
+
+    </div>
+
+    <div class="faq-container">
+
+      <div class="faq">
+
+        <h3>Apakah mochi dibuat fresh?</h3>
+
+        <p>
+          Ya. Semua mochi dibuat setiap hari menggunakan bahan fresh
+          dan mozzarella premium.
+        </p>
+
+      </div>
+
+      <div class="faq">
+
+        <h3>Berapa lama daya tahan produk?</h3>
+
+        <p>
+          Produk tahan 1-2 hari di suhu ruangan
+          dan hingga 4 hari di kulkas.
+        </p>
+
+      </div>
+
+      <div class="faq">
+
+        <h3>Apakah bisa custom topping?</h3>
+
+        <p>
+          Bisa. Customer dapat request topping tambahan
+          seperti oreo crumble, almond, atau extra cheese.
+        </p>
+
+      </div>
+
+      <div class="faq">
+
+        <h3>Metode pembayaran apa saja?</h3>
+
+        <p>
+          Mendukung transfer bank, QRIS,
+          e-wallet, dan pembayaran marketplace.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ORDER -->
+
+  <section id="order">
+
+    <div class="section-title">
+
+      <h2>Form Pemesanan</h2>
+
+      <p>
+        Isi data berikut untuk melakukan pemesanan marketplace.
+      </p>
+
+    </div>
+
+    <div class="order-box">
+
+      <form>
+
+        <input type="text" placeholder="Nama Lengkap">
+
+        <input type="text" placeholder="Nomor WhatsApp">
+
+        <select>
+          <option>Pilih Menu</option>
+          <option>Chocolate Lava</option>
+          <option>Matcha Melt</option>
+          <option>Strawberry Cloud</option>
+        </select>
+
+        <input type="number" placeholder="Jumlah Pesanan">
+
+        <textarea placeholder="Alamat Lengkap"></textarea>
+
+        <button class="submit-btn">
+          Checkout Pesanan
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-grid">
+
+      <div>
+
+        <h3>MochiMozz</h3>
+
+        <p>
+          Marketplace dessert aesthetic dengan konsep modern,
+          premium packaging, dan pelayanan cepat.
+        </p>
+
+      </div>
+
+      <div>
+
+        <h3>Kontak</h3>
+
+        <p>
+          WhatsApp: 08xxxxxxxxxx
+          <br>
+          Instagram: @mochimozz
+          <br>
+          Email: support@mochimozz.com
+        </p>
+
+      </div>
+
+      <div>
+
+        <h3>Marketplace Info</h3>
+
+        <p>
+          Open Daily
+          <br>
+          09:00 - 22:00
+          <br>
+          Free Delivery Area Kota
+        </p>
+
+      </div>
+
+      <div>
+
+        <h3>Customer Service</h3>
+
+        <p>
+          FAQ
+          <br>
+          Refund Policy
+          <br>
+          Shipping Information
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="copyright">
+
+      © 2026 MochiMozz Marketplace 🍡
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
