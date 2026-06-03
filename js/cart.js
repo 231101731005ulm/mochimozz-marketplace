@@ -1,8 +1,14 @@
-let cart = [];
+// js/cart.js
 
-// Fungsi memunculkan notifikasi
+// Ambil data dari LocalStorage jika ada, jika kosong gunakan array []
+let cart = JSON.parse(localStorage.getItem('mochiCart')) || [];
+
+// Panggil update UI saat halaman pertama dimuat agar angka keranjang muncul
+document.addEventListener("DOMContentLoaded", updateCartUI);
+
 function showToast(message) {
     const toast = document.getElementById('toast');
+    if(!toast) return;
     toast.innerText = message;
     toast.className = "toast show";
     setTimeout(function() { 
@@ -10,7 +16,11 @@ function showToast(message) {
     }, 3000);
 }
 
-// Tambah produk ke keranjang
+function saveCart() {
+    // Simpan keranjang ke memori browser
+    localStorage.setItem('mochiCart', JSON.stringify(cart));
+}
+
 function addToCart(productId, qtyToAdd = 1) {
     const product = products.find(p => p.id === productId);
     const existingItem = cart.find(item => item.id === productId);
@@ -20,52 +30,60 @@ function addToCart(productId, qtyToAdd = 1) {
     } else {
         cart.push({ ...product, qty: qtyToAdd });
     }
+    
+    saveCart(); // Simpan perubahan
     updateCartUI();
     showToast(`${qtyToAdd}x ${product.name} masuk keranjang! 🛒`);
 }
 
-// Hapus dari keranjang
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
+    saveCart(); // Simpan perubahan
     updateCartUI();
 }
 
-// Update tampilan UI Keranjang
 function updateCartUI() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
     const cartTotal = document.getElementById('cart-total');
     const btnProceed = document.getElementById('btn-proceed');
     
-    cartItemsContainer.innerHTML = '';
     let total = 0;
     let count = 0;
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>Keranjang masih kosong.</p>';
-        btnProceed.style.display = 'none';
-    } else {
-        btnProceed.style.display = 'block';
-        cart.forEach(item => {
-            total += item.price * item.qty;
-            count += item.qty;
-            cartItemsContainer.innerHTML += `
-                <div class="cart-item">
-                    <div>
-                        <h4>${item.name}</h4>
-                        <p>Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}</p>
-                    </div>
-                    <button type="button" class="btn-delete" onclick="removeFromCart(${item.id})">Hapus</button>
-                </div>
-            `;
-        });
-    }
+    // Hitung total dulu untuk angka di tombol keranjang navbar
+    cart.forEach(item => {
+        total += item.price * item.qty;
+        count += item.qty;
+    });
 
-    cartCount.innerText = count;
-    cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+    if(cartCount) cartCount.innerText = count;
+
+    // Jika elemen UI keranjang (di dalam modal) ada, perbarui juga
+    if(cartItemsContainer && cartTotal && btnProceed) {
+        cartItemsContainer.innerHTML = '';
+        
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p>Keranjang masih kosong.</p>';
+            btnProceed.style.display = 'none';
+        } else {
+            btnProceed.style.display = 'block';
+            cart.forEach(item => {
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <h4 style="margin-bottom:5px;">${item.name}</h4>
+                            <p>Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}</p>
+                        </div>
+                        <button type="button" class="btn-secondary" style="padding: 5px 10px;" onclick="removeFromCart(${item.id})">Hapus</button>
+                    </div>
+                `;
+            });
+        }
+        cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+    }
 }
 
-// Navigasi Checkout
 function showCheckoutView() {
     document.getElementById('cart-view').style.display = 'none';
     document.getElementById('checkout-view').style.display = 'block';
@@ -76,7 +94,6 @@ function showCartView() {
     document.getElementById('cart-view').style.display = 'block';
 }
 
-// Proses Cetak Struk
 function processPayment(event) {
     event.preventDefault();
 
@@ -131,8 +148,9 @@ function processPayment(event) {
 
     window.print();
 
-    // Reset setelah print
+    // Reset keranjang dari UI dan Memori Browser setelah sukses cetak
     cart = [];
+    saveCart();
     updateCartUI();
     document.getElementById('checkout-form').reset();
     document.getElementById('cart-modal').style.display = "none";
