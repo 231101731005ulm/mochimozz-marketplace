@@ -1,7 +1,16 @@
-// js/cart.js
 let cart = [];
 
-// Tambah produk ke keranjang (dengan parameter jumlah)
+// Fungsi memunculkan notifikasi
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = "toast show";
+    setTimeout(function() { 
+        toast.className = toast.className.replace("show", ""); 
+    }, 3000);
+}
+
+// Tambah produk ke keranjang
 function addToCart(productId, qtyToAdd = 1) {
     const product = products.find(p => p.id === productId);
     const existingItem = cart.find(item => item.id === productId);
@@ -12,21 +21,7 @@ function addToCart(productId, qtyToAdd = 1) {
         cart.push({ ...product, qty: qtyToAdd });
     }
     updateCartUI();
-    
-    // Tampilkan notifikasi rapi (Toast) bukan alert
-    showToast(`${qtyToAdd}x ${product.name} masuk keranjang! 🍡`);
-}
-
-// Fungsi untuk memunculkan Toast Notification
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.innerText = message;
-    toast.className = "toast show";
-    
-    // Hilangkan toast secara otomatis setelah 3 detik
-    setTimeout(function() { 
-        toast.className = toast.className.replace("show", ""); 
-    }, 3000);
+    showToast(`${qtyToAdd}x ${product.name} masuk keranjang! 🛒`);
 }
 
 // Hapus dari keranjang
@@ -35,7 +30,7 @@ function removeFromCart(productId) {
     updateCartUI();
 }
 
-// Update UI Keranjang
+// Update tampilan UI Keranjang
 function updateCartUI() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
@@ -54,7 +49,6 @@ function updateCartUI() {
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
-            
             cartItemsContainer.innerHTML += `
                 <div class="cart-item">
                     <div>
@@ -71,7 +65,7 @@ function updateCartUI() {
     cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
 
-// Navigasi modal checkout
+// Navigasi Checkout
 function showCheckoutView() {
     document.getElementById('cart-view').style.display = 'none';
     document.getElementById('checkout-view').style.display = 'block';
@@ -82,7 +76,7 @@ function showCartView() {
     document.getElementById('cart-view').style.display = 'block';
 }
 
-// Proses Pembayaran dan Cetak Struk
+// Proses Cetak Struk
 function processPayment(event) {
     event.preventDefault();
 
@@ -91,22 +85,9 @@ function processPayment(event) {
         return;
     }
 
-    generateReceipt();
-    window.print();
-
-    // Bersihkan setelah print
-    cart = [];
-    updateCartUI();
-    document.getElementById('checkout-form').reset();
-    closeModal();
-}
-
-// Cetak Struk
-function generateReceipt() {
     const name = document.getElementById('cust-name').value;
     const method = document.getElementById('payment-method').value;
     const receiptContainer = document.getElementById('print-receipt');
-    
     const date = new Date().toLocaleString('id-ID');
     const orderId = 'INV-' + Math.floor(Math.random() * 1000000);
     
@@ -124,33 +105,36 @@ function generateReceipt() {
         `;
     });
 
-    const receiptHtml = `
+    receiptContainer.innerHTML = `
         <div style="text-align: center; border-bottom: 1px dashed black; padding-bottom: 10px; margin-bottom: 10px;">
             <h2 style="margin: 0; font-size: 18px;">CRISPY MOCHIZZA</h2>
             <p style="margin: 5px 0 0 0;">Banjarbaru, Kalimantan Selatan</p>
             <p style="margin: 0; font-size: 10px;">${date}</p>
         </div>
-        
         <div style="margin-bottom: 15px; font-size: 12px;">
             <p style="margin: 2px 0;"><strong>No:</strong> ${orderId}</p>
             <p style="margin: 2px 0;"><strong>Nama:</strong> ${name}</p>
             <p style="margin: 2px 0;"><strong>Bayar:</strong> ${method}</p>
         </div>
-        
         <div style="border-bottom: 1px dashed black; padding-bottom: 10px; margin-bottom: 10px; font-size: 12px;">
             ${itemHtml}
         </div>
-        
         <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
             <span>TOTAL:</span>
             <span>Rp ${total.toLocaleString('id-ID')}</span>
         </div>
-        
         <div style="text-align: center; margin-top: 20px; font-size: 12px;">
             <h3 style="margin: 0;">-- LUNAS --</h3>
             <p style="margin: 5px 0 0 0;">Terima kasih atas pesanan Anda!</p>
         </div>
     `;
 
-    receiptContainer.innerHTML = receiptHtml;
+    window.print();
+
+    // Reset setelah print
+    cart = [];
+    updateCartUI();
+    document.getElementById('checkout-form').reset();
+    document.getElementById('cart-modal').style.display = "none";
+    showCartView();
 }
