@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crispy Mochizza | Self-Service</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,7 +21,7 @@
         </button>
     </nav>
 
-    <header class="hero">
+    <header class="hero" id="hero-section">
         <div class="hero-content">
             <h1>Dessert Modern dengan Sentuhan Klasik</h1>
             <p>Pilih varian favoritmu, bayar instan, dan cetak struk pesananmu secara digital.</p>
@@ -32,24 +30,15 @@
     </header>
 
     <section class="social-proof">
-        <div class="proof-item">
-            <h3>⭐ 4.9/5</h3>
-            <p>Rating Pelanggan</p>
-        </div>
-        <div class="proof-item">
-            <h3>1,500+</h3>
-            <p>Pesanan Selesai</p>
-        </div>
-        <div class="proof-item">
-            <h3>500+</h3>
-            <p>Ulasan Positif</p>
-        </div>
+        <div class="proof-item"><h3>⭐ 4.9/5</h3><p>Rating Pelanggan</p></div>
+        <div class="proof-item"><h3>1,500+</h3><p>Pesanan Selesai</p></div>
+        <div class="proof-item"><h3>500+</h3><p>Ulasan Positif</p></div>
     </section>
 
     <section id="menu" class="products-section">
         <div class="section-title">
             <h2>Menu Spesial Kami</h2>
-            <p>Pilih menu, masukkan ke keranjang, dan langsung checkout.</p>
+            <p>Pilih menu untuk melihat detail dan mengatur jumlah pesanan.</p>
         </div>
         <div class="product-grid" id="product-list"></div>
     </section>
@@ -57,16 +46,33 @@
     <footer>
         <div class="footer-content">
             <h3>Crispy Mochizza</h3>
-            <div class="social-links">
-                <a href="#">Instagram</a> | <a href="#">TikTok</a> | <a href="#">WhatsApp</a>
-            </div>
             <p class="copyright">&copy; 2026 Crispy Mochizza. Prototype Version.</p>
         </div>
     </footer>
 
+    <div id="toast" class="toast">Notifikasi</div>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content product-modal-content">
+            <span class="close-btn" onclick="closeProductModal()">&times;</span>
+            <img id="modal-img" src="" alt="Product">
+            <h2 id="modal-title">Nama Produk</h2>
+            <p id="modal-desc" class="desc">Deskripsi</p>
+            <h3 id="modal-price" class="price">Rp 0</h3>
+            
+            <div class="qty-selector">
+                <button onclick="changeQty(-1)">-</button>
+                <input type="number" id="modal-qty" value="1" min="1" readonly>
+                <button onclick="changeQty(1)">+</button>
+            </div>
+            
+            <button id="modal-add-btn" class="btn-checkout">Masukkan Keranjang</button>
+        </div>
+    </div>
+
     <div id="cart-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             
             <div id="cart-view">
                 <h2>Keranjang Belanja</h2>
