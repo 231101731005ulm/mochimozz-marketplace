@@ -1,26 +1,41 @@
+// js/cart.js
 let cart = [];
 
-// Menambah produk ke keranjang
-function addToCart(productId) {
+// Tambah produk ke keranjang (dengan parameter jumlah)
+function addToCart(productId, qtyToAdd = 1) {
     const product = products.find(p => p.id === productId);
     const existingItem = cart.find(item => item.id === productId);
 
     if (existingItem) {
-        existingItem.qty += 1;
+        existingItem.qty += qtyToAdd;
     } else {
-        cart.push({ ...product, qty: 1 });
+        cart.push({ ...product, qty: qtyToAdd });
     }
     updateCartUI();
-    alert(`${product.name} ditambahkan ke keranjang!`);
+    
+    // Tampilkan notifikasi rapi (Toast) bukan alert
+    showToast(`${qtyToAdd}x ${product.name} masuk keranjang! 🍡`);
 }
 
-// Menghapus produk dari keranjang
+// Fungsi untuk memunculkan Toast Notification
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.className = "toast show";
+    
+    // Hilangkan toast secara otomatis setelah 3 detik
+    setTimeout(function() { 
+        toast.className = toast.className.replace("show", ""); 
+    }, 3000);
+}
+
+// Hapus dari keranjang
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     updateCartUI();
 }
 
-// Memperbarui tampilan angka dan daftar di dalam keranjang
+// Update UI Keranjang
 function updateCartUI() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
@@ -56,7 +71,7 @@ function updateCartUI() {
     cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
 
-// Transisi view di dalam modal
+// Navigasi modal checkout
 function showCheckoutView() {
     document.getElementById('cart-view').style.display = 'none';
     document.getElementById('checkout-view').style.display = 'block';
@@ -67,26 +82,26 @@ function showCartView() {
     document.getElementById('cart-view').style.display = 'block';
 }
 
-// Proses Pembayaran dan memicu Print
+// Proses Pembayaran dan Cetak Struk
 function processPayment(event) {
     event.preventDefault();
 
     if (cart.length === 0) {
-        alert("Keranjang kosong!");
+        showToast("Keranjang kosong!");
         return;
     }
 
     generateReceipt();
-    window.print(); // Memanggil fitur cetak bawaan browser
+    window.print();
 
-    // Reset keranjang setelah print
+    // Bersihkan setelah print
     cart = [];
     updateCartUI();
     document.getElementById('checkout-form').reset();
-    closeModal(); // Menutup modal otomatis
+    closeModal();
 }
 
-// Membuat desain HTML untuk struk (Disembunyikan di web, muncul di kertas)
+// Cetak Struk
 function generateReceipt() {
     const name = document.getElementById('cust-name').value;
     const method = document.getElementById('payment-method').value;
