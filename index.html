@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crispy Mochizza | Self-Service</title>
+    <title>Crispy Mochizza | Beranda</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,101 +18,75 @@
             <img src="./images/Logo mochi.jpeg" alt="Logo" class="logo-img" onerror="this.style.display='none';">
             <h2>Crispy Mochizza</h2>
         </div>
-        <button id="cart-btn" class="cart-btn">
-            🛒 Keranjang (<span id="cart-count">0</span>)
-        </button>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="outlets.html">Placement</a></li>
+        </ul>
+
+        <div class="nav-extra">
+            <a href="products.html" class="btn-pesan">Pesan Sekarang</a>
+        </div>
     </nav>
 
-    <header class="hero" id="hero-section">
+    <header class="hero">
         <div class="hero-content">
-            <h1>Dessert Modern dengan Sentuhan Klasik</h1>
-            <p>Pilih varian favoritmu, bayar instan, dan cetak struk pesananmu secara digital.</p>
-            <a href="#menu" class="btn-primary">Pesan Sekarang</a>
+            <h1>Dessert Modern Sentuhan Klasik</h1>
+            <p>Perpaduan sempurna kulit mochi krispi dengan isian lumer yang menggugah selera. Dibuat fresh setiap hari untuk menemani momen manismu.</p>
+            <a href="products.html" class="btn-primary">Lihat Menu Spesial</a>
         </div>
     </header>
 
-    <section class="social-proof">
-        <div class="proof-item"><h3>⭐ 4.9/5</h3><p>Rating Pelanggan</p></div>
-        <div class="proof-item"><h3>1,500+</h3><p>Pesanan Selesai</p></div>
-        <div class="proof-item"><h3>500+</h3><p>Ulasan Positif</p></div>
-    </section>
-
-    <section id="menu" class="products-section">
+    <section class="section-padding">
         <div class="section-title">
-            <h2>Menu Spesial Kami</h2>
-            <p>Pilih menu untuk melihat detail dan mengatur jumlah pesanan.</p>
+            <h2>Menu Favorit Pelanggan</h2>
+            <p>Varian terbaik kami yang selalu habis terjual setiap harinya.</p>
         </div>
-        <div class="product-grid" id="product-list"></div>
+        
+        <div class="best-seller-grid">
+            <div class="card">
+                <img src="./images/Original Mochi.jpeg" alt="Original Mozza" onerror="this.src='https://via.placeholder.com/300?text=Gambar+Kosong'">
+                <h3>Original Mozza</h3>
+                <p>Isian mozzarella premium yang mulur sempurna berbalut mochi krispi.</p>
+            </div>
+            <div class="card">
+                <img src="./images/Choco Mochi.jpeg" alt="Chocolate Lava" onerror="this.src='https://via.placeholder.com/300?text=Gambar+Kosong'">
+                <h3>Chocolate Lava</h3>
+                <p>Cokelat premium lumer yang memberikan sensasi luar biasa di mulut.</p>
+            </div>
+            <div class="card">
+                <img src="./images/Matcha Mochi.jpeg" alt="Matcha Melt" onerror="this.src='https://via.placeholder.com/300?text=Gambar+Kosong'">
+                <h3>Matcha Melt</h3>
+                <p>Rasa matcha asli yang creamy, wangi, dan menenangkan hati.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <h3>Crispy Mochizza</h3>
-            <p class="copyright">&copy; 2026 Crispy Mochizza. Prototype Version.</p>
+        <div class="footer-container">
+            <div class="footer-box">
+                <h3>Crispy Mochizza</h3>
+                <p>Menghadirkan inovasi mochi krispi pertama di Banjarbaru, Kalimantan Selatan dengan bahan-bahan premium pilihan.</p>
+            </div>
+            <div class="footer-box">
+                <h3>Link Cepat</h3>
+                <p><a href="about.html" style="color:#ccc; text-decoration:none;">Cerita Kami</a></p>
+                <p><a href="products.html" style="color:#ccc; text-decoration:none;">Pesan Online</a></p>
+                <p><a href="outlets.html" style="color:#ccc; text-decoration:none;">Lokasi Outlet</a></p>
+            </div>
+            <div class="footer-box">
+                <h3>Hubungi Kami</h3>
+                <p>Instagram: @crispymochizza</p>
+                <p>WhatsApp: +62 812-3456-7890</p>
+                <p>Jam Buka: 10:00 - 22:00 WITA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Crispy Mochizza. Dibuat dengan cinta. 🍡</p>
         </div>
     </footer>
 
-    <div id="toast" class="toast">Notifikasi</div>
-
-    <div id="product-modal" class="modal">
-        <div class="modal-content product-modal-content">
-            <span class="close-btn" onclick="closeProductModal()">&times;</span>
-            <img id="modal-img" src="" alt="Product">
-            <h2 id="modal-title">Nama Produk</h2>
-            <p id="modal-desc" class="desc">Deskripsi</p>
-            <h3 id="modal-price" class="price">Rp 0</h3>
-            
-            <div class="qty-selector">
-                <button onclick="changeQty(-1)">-</button>
-                <input type="number" id="modal-qty" value="1" min="1" readonly>
-                <button onclick="changeQty(1)">+</button>
-            </div>
-            
-            <button id="modal-add-btn" class="btn-checkout">Masukkan Keranjang</button>
-        </div>
-    </div>
-
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            
-            <div id="cart-view">
-                <h2>Keranjang Belanja</h2>
-                <div id="cart-items" class="cart-items-container">
-                    <p>Keranjang masih kosong.</p>
-                </div>
-                <div class="cart-summary">
-                    <h3>Total: <span id="cart-total">Rp 0</span></h3>
-                </div>
-                <button id="btn-proceed" class="btn-checkout" style="display: none;" onclick="showCheckoutView()">Lanjut Pembayaran</button>
-            </div>
-
-            <div id="checkout-view" style="display: none;">
-                <h2>Detail Pembayaran</h2>
-                <form id="checkout-form" onsubmit="processPayment(event)">
-                    <div class="input-group">
-                        <input type="text" id="cust-name" placeholder="Nama Pemesan" required>
-                    </div>
-                    <div class="input-group">
-                        <select id="payment-method" required>
-                            <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                            <option value="QRIS">QRIS</option>
-                            <option value="Transfer BCA">Transfer Bank BCA</option>
-                            <option value="GoPay">GoPay</option>
-                            <option value="Tunai">Tunai di Kasir</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-checkout">Proses & Cetak Struk</button>
-                    <button type="button" class="btn-secondary" onclick="showCartView()">Kembali ke Keranjang</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div id="print-receipt" class="receipt-container"></div>
-
-    <script src="./js/products.js"></script>
-    <script src="./js/cart.js"></script>
-    <script src="./js/main.js"></script>
 </body>
 </html>
