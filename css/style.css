@@ -203,3 +203,75 @@ footer {
     overflow: hidden;
 }
 .map-placeholder { text-align: center; color: #888; font-weight: bold; }
+
+/* --- 8. FINISHING: FLOATING WHATSAPP & SOCIAL MEDIA --- */
+
+/* Tombol Floating WhatsApp */
+.wa-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.wa-float:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 2px 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+.wa-icon {
+    width: 35px;
+    height: 35px;
+}
+
+/* Desain Footer & Media Sosial */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.footer-logo .logo-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--white);
+}
+
+.footer-logo h2 {
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+.social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.socmed-link {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.socmed-link:hover {
+    color: var(--secondary-color);
+    transform: translateX(8px);
+}
