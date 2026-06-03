@@ -32,13 +32,36 @@
         </div>
     </nav>
 
-    <!-- KATALOG PRODUK -->
-    <section class="section-padding">
-        <div class="section-title">
-            <h2>Katalog Spesial Kami</h2>
-            <p>Pilih menu favoritmu, atur jumlahnya, dan langsung checkout dengan mudah.</p>
+<!-- AREA TOKO (SIDEBAR & KATALOG) -->
+    <section class="section-padding" style="padding-top: 40px;">
+        <div class="shop-container">
+            
+            <!-- Sidebar Filter (Kiri) -->
+            <aside class="sidebar-filter">
+                <h3>Filter:</h3>
+                <div class="filter-group">
+                    <label>Price:</label>
+                    <div class="price-inputs">
+                        <input type="number" placeholder="From">
+                        <input type="number" placeholder="To">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Rating:</label>
+                    <div class="rating-filters">
+                        <button>⭐ 5</button>
+                        <button>⭐ 4</button>
+                        <button>⭐ 3</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Grid Produk (Kanan) -->
+            <main class="product-grid" id="product-list">
+                <!-- Produk akan di-render oleh JS -->
+            </main>
+
         </div>
-        <div class="product-grid" id="product-list"></div>
     </section>
 
     <!-- FOOTER -->
