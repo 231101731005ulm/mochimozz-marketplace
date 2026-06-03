@@ -1,302 +1,110 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
-```
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Crispy Mochizza</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="css/style.css">
-```
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crispy Mochizza | Self-Service</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-```
-<!-- NAVBAR -->
-
-<nav>
-
-    <div class="logo">
-
-        <img src="images/Logo Mochi.jpeg" alt="Crispy Mochizza Logo">
-
-        <h2>Crispy Mochizza</h2>
-
-    </div>
-
-    <ul>
-
-        <li><a href="#home">Home</a></li>
-
-        <li><a href="#review">Review</a></li>
-
-        <li><a href="#menu">Menu</a></li>
-
-        <li><a href="#cart">Keranjang</a></li>
-
-        <li><a href="#order">Pesan</a></li>
-
-        <li><a href="#about">About</a></li>
-
-        <li><a href="#contact">Kontak</a></li>
-
-    </ul>
-
-</nav>
-
-<!-- HERO -->
-
-<header id="home">
-
-    <div class="hero-content">
-
-        <div class="hero-text">
-
-            <span class="hero-badge">
-                ✨ Crispy • Chewy • Mozzarella Melt
-            </span>
-
-            <h1>
-                Crispy Outside <br>
-                Melty Inside 🧀
-            </h1>
-
-            <p>
-                Dessert viral dengan sensasi crispy,
-                chewy, dan mozzarella melt premium
-                yang cocok untuk semua kalangan.
-            </p>
-
-            <a href="#menu" class="hero-btn">
-                Lihat Menu
-            </a>
-
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/Logo mochi.jpeg" alt="Logo" class="logo-img" onerror="this.style.display='none';">
+            <h2>Crispy Mochizza</h2>
         </div>
-
-        <div class="hero-image">
-
-            <img src="images/Choco Mochi.jpeg" alt="Chocolate Lava">
-
-        </div>
-
-    </div>
-
-</header>
-
-<!-- REVIEW -->
-
-<section id="review">
-
-    <h2>Dipercaya Pelanggan</h2>
-
-    <div class="review-container">
-
-        <div class="review-box">
-            ⭐ 4.9 / 5
-            <span>Rating Pelanggan</span>
-        </div>
-
-        <div class="review-box">
-            📦 500+
-            <span>Pesanan</span>
-        </div>
-
-        <div class="review-box">
-            ❤️ 100+
-            <span>Review</span>
-        </div>
-
-        <div class="review-box">
-            👥 200+
-            <span>Pelanggan</span>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- MENU -->
-
-<section id="menu">
-
-    <h2>Menu Favorit</h2>
-
-    <div id="product-container">
-
-        <!-- Produk otomatis dari products.js -->
-
-    </div>
-
-</section>
-
-<!-- KERANJANG -->
-
-<section id="cart">
-
-    <h2>Keranjang Belanja</h2>
-
-    <div id="cart-items">
-
-        Keranjang masih kosong 🛒
-
-    </div>
-
-    <div id="cart-total">
-
-        Total: Rp0
-
-    </div>
-
-</section>
-
-<!-- FORM PEMESANAN -->
-
-<section id="order">
-
-    <h2>Data Pemesanan</h2>
-
-    <div class="order-form">
-
-        <input
-            type="text"
-            id="customer-name"
-            placeholder="Nama Lengkap">
-
-        <input
-            type="text"
-            id="customer-phone"
-            placeholder="Nomor WhatsApp">
-
-        <textarea
-            id="customer-address"
-            placeholder="Alamat Lengkap"></textarea>
-
-        <textarea
-            id="customer-note"
-            placeholder="Catatan Tambahan"></textarea>
-
-        <button id="checkout-btn">
-
-            Checkout WhatsApp
-
+        <button id="cart-btn" class="cart-btn">
+            🛒 Keranjang (<span id="cart-count">0</span>)
         </button>
+    </nav>
 
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Dessert Modern dengan Sentuhan Klasik</h1>
+            <p>Pilih varian favoritmu, bayar instan, dan cetak struk pesananmu secara digital.</p>
+            <a href="#menu" class="btn-primary">Pesan Sekarang</a>
+        </div>
+    </header>
+
+    <section class="social-proof">
+        <div class="proof-item">
+            <h3>⭐ 4.9/5</h3>
+            <p>Rating Pelanggan</p>
+        </div>
+        <div class="proof-item">
+            <h3>1,500+</h3>
+            <p>Pesanan Selesai</p>
+        </div>
+        <div class="proof-item">
+            <h3>500+</h3>
+            <p>Ulasan Positif</p>
+        </div>
+    </section>
+
+    <section id="menu" class="products-section">
+        <div class="section-title">
+            <h2>Menu Spesial Kami</h2>
+            <p>Pilih menu, masukkan ke keranjang, dan langsung checkout.</p>
+        </div>
+        <div class="product-grid" id="product-list"></div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Crispy Mochizza</h3>
+            <div class="social-links">
+                <a href="#">Instagram</a> | <a href="#">TikTok</a> | <a href="#">WhatsApp</a>
+            </div>
+            <p class="copyright">&copy; 2026 Crispy Mochizza. Prototype Version.</p>
+        </div>
+    </footer>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            
+            <div id="cart-view">
+                <h2>Keranjang Belanja</h2>
+                <div id="cart-items" class="cart-items-container">
+                    <p>Keranjang masih kosong.</p>
+                </div>
+                <div class="cart-summary">
+                    <h3>Total: <span id="cart-total">Rp 0</span></h3>
+                </div>
+                <button id="btn-proceed" class="btn-checkout" style="display: none;" onclick="showCheckoutView()">Lanjut Pembayaran</button>
+            </div>
+
+            <div id="checkout-view" style="display: none;">
+                <h2>Detail Pembayaran</h2>
+                <form id="checkout-form" onsubmit="processPayment(event)">
+                    <div class="input-group">
+                        <input type="text" id="cust-name" placeholder="Nama Pemesan" required>
+                    </div>
+                    <div class="input-group">
+                        <select id="payment-method" required>
+                            <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                            <option value="QRIS">QRIS</option>
+                            <option value="Transfer BCA">Transfer Bank BCA</option>
+                            <option value="GoPay">GoPay</option>
+                            <option value="Tunai">Tunai di Kasir</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-checkout">Proses & Cetak Struk</button>
+                    <button type="button" class="btn-secondary" onclick="showCartView()">Kembali ke Keranjang</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-</section>
+    <div id="print-receipt" class="receipt-container"></div>
 
-<!-- ABOUT -->
-
-<section id="about">
-
-    <h2>Tentang Kami</h2>
-
-    <p>
-
-        Crispy Mochizza merupakan dessert modern
-        yang menggabungkan mochi crispy,
-        mozzarella premium,
-        dan berbagai rasa kekinian
-        dalam satu gigitan yang lezat.
-
-    </p>
-
-</section>
-
-<!-- CONTACT -->
-
-<section id="contact">
-
-    <h2>Kontak Kami</h2>
-
-    <div class="contact-container">
-
-        <p>
-            📱 WhatsApp :
-            08xxxxxxxxxx
-        </p>
-
-        <p>
-            📸 Instagram :
-            @crispymochizza
-        </p>
-
-        <p>
-            🎵 TikTok :
-            @crispymochizza
-        </p>
-
-        <p>
-            📍 Palangka Raya,
-            Kalimantan Tengah
-        </p>
-
-    </div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-    <div class="footer-column">
-
-        <h3>Crispy Mochizza</h3>
-
-        <p>
-            Crispy Outside, Melty Inside.
-        </p>
-
-    </div>
-
-    <div class="footer-column">
-
-        <h3>Sosial Media</h3>
-
-        <p>Instagram</p>
-
-        <p>TikTok</p>
-
-        <p>WhatsApp</p>
-
-    </div>
-
-    <div class="footer-column">
-
-        <h3>Jam Operasional</h3>
-
-        <p>
-            Senin - Minggu
-            <br>
-            09.00 - 22.00 WIB
-        </p>
-
-    </div>
-
-</footer>
-
-<!-- JAVASCRIPT -->
-
-<script src="js/products.js"></script>
-
-<script src="js/cart.js"></script>
-
-<script src="js/checkout.js"></script>
-
-<script src="js/main.js"></script>
-```
-
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
 </body>
-
 </html>
