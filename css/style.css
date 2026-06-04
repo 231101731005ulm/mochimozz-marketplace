@@ -276,79 +276,81 @@ footer {
     transform: translateX(8px);
 }
 
-/* --- 9. FINISHING: LAYOUT HALAMAN PRODUK ALA TANAMERA --- */
+/* --- 9. MODERNISASI HALAMAN PRODUK & KERANJANG --- */
 
-/* Wrapper Utama Sidebar + Grid */
-.shop-container {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-}
+/* Wrapper Utama */
+.shop-container { display: flex; gap: 40px; align-items: flex-start; }
 
-/* Sidebar Kiri */
-.sidebar-filter {
-    width: 250px;
-    flex-shrink: 0;
-    padding-right: 20px;
+/* Sidebar Kiri (Lebih Rapi & Menonjol) */
+.sidebar-filter { 
+    width: 260px; flex-shrink: 0; background: var(--white); 
+    padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
 }
-.sidebar-filter h3 { margin-bottom: 20px; font-size: 1.2rem; color: #333; }
+.sidebar-filter h3 { margin-bottom: 20px; font-size: 1.2rem; color: #333; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
 .filter-group { margin-bottom: 25px; }
-.filter-group label { display: block; margin-bottom: 10px; color: #666; font-size: 0.9rem; }
-.price-inputs { display: flex; gap: 10px; }
-.price-inputs input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem; outline: none; }
-.rating-filters { display: flex; gap: 10px; flex-wrap: wrap; }
-.rating-filters button { padding: 5px 12px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer; color: #333; transition: 0.2s;}
-.rating-filters button:hover { border-color: var(--primary-color); }
+.filter-group label { display: block; margin-bottom: 10px; color: #444; font-size: 0.95rem; font-weight: 600; }
+.price-inputs { display: flex; gap: 10px; align-items: center; }
+.price-inputs input { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; outline: none; transition: 0.3s; }
+.price-inputs input:focus { border-color: var(--primary-color); }
+.rating-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.rating-filters button { padding: 6px 12px; border: 1px solid #e0e0e0; background: white; border-radius: 20px; cursor: pointer; color: #555; font-size: 0.85rem; transition: 0.3s; }
+.rating-filters button:hover { border-color: var(--primary-color); color: var(--primary-color); }
 
-/* Grid Kanan */
-.shop-container .product-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 30px;
+/* Grid Kanan (Kartu Produk Modern) */
+.product-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+
+.card-shop { 
+    background: var(--white); border-radius: 12px; overflow: hidden; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; 
+    border: 1px solid #f5f5f5; display: flex; flex-direction: column; 
 }
+.card-shop:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
 
-/* Modifikasi Kartu Produk (Lebih Bersih) */
-.card-shop { text-align: left; box-shadow: none; border-radius: 0; padding-bottom: 0;}
-.card-shop:hover { transform: translateY(-5px); }
-.card-shop img { height: 220px; border-bottom: 1px solid #eee; border-radius: 0; }
-.card-body { padding: 15px 0; }
-.card-body h3 { font-size: 1.1rem; color: #555; margin-bottom: 8px; font-weight: 400;}
+/* Efek Zoom Lembut pada Gambar */
+.card-img-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fafafa; }
+.card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.card-shop:hover .card-img-wrapper img { transform: scale(1.08); }
 
-/* Tipografi Harga & Meta */
-.price-container { margin-bottom: 8px; }
-.price-current { font-weight: 700; font-size: 1.1rem; color: #222; display: block;}
-.price-original { text-decoration: line-through; color: #888; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 2px;}
-.card-meta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #777; margin-bottom: 15px; }
-.btn-shop { width: 100%; border-radius: 5px; padding: 10px; font-size: 0.95rem; }
+/* Tipografi Kartu Produk */
+.card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+.card-body h3 { font-size: 1.15rem; color: #222; margin-bottom: 8px; font-weight: 600; line-height: 1.3; }
+.price-container { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.price-current { font-weight: 700; font-size: 1.25rem; color: var(--primary-color); }
+.price-original { text-decoration: line-through; color: #999; font-size: 0.9rem; }
+.card-meta { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #777; margin-bottom: 20px; }
+.card-meta .rating { color: #f39c12; font-weight: 600; }
+.card-meta .divider { color: #ddd; }
 
-/* Responsive: Jika dibuka di HP, Sidebar pindah ke atas */
+/* Tombol Pilih Pesanan Modern (Outline Button) */
+.btn-shop { 
+    margin-top: auto; width: 100%; background: var(--white); 
+    color: var(--primary-color); border: 2px solid var(--primary-color); 
+    padding: 10px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; 
+    cursor: pointer; transition: 0.3s; 
+}
+.btn-shop:hover { background: var(--primary-color); color: var(--white); }
+
+/* Modernisasi Modal (Pop-up) */
+.modal-content { border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: none; padding: 40px; }
+.close-btn { 
+    top: 20px; right: 25px; background: #f0f0f0; width: 35px; height: 35px; 
+    display: flex; align-items: center; justify-content: center; 
+    border-radius: 50%; font-size: 1.2rem; transition: 0.3s;
+}
+.close-btn:hover { background: #e74c3c; color: white; }
+
+/* Responsive HP */
 @media (max-width: 768px) {
     .shop-container { flex-direction: column; }
-    .sidebar-filter { width: 100%; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .sidebar-filter { width: 100%; border-bottom: 1px solid #eee; padding-bottom: 20px; box-shadow: none; border-radius: 0; }
 }
 
-/* Tombol WA Melayang (Gaya Kapsul Tanamera) */
+/* Tombol WA Melayang */
 .wa-float-tanamera {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #55c85d; /* Hijau cerah ala WhatsApp */
-    color: #FFF;
-    border-radius: 30px;
-    padding: 12px 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
-    z-index: 1000;
-    transition: all 0.3s ease;
+    position: fixed; bottom: 30px; right: 30px; background-color: #55c85d; color: #FFF;
+    border-radius: 30px; padding: 12px 20px; font-weight: 600; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px; text-decoration: none;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.15); z-index: 1000; transition: all 0.3s ease;
 }
-.wa-float-tanamera:hover {
-    background-color: #4eb555;
-    transform: translateY(-3px);
-}
+.wa-float-tanamera:hover { background-color: #4eb555; transform: translateY(-3px); }
 .wa-icon-small { width: 20px; height: 20px; }
