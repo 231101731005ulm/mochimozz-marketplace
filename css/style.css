@@ -39,7 +39,7 @@ body {
 }
 
 .logo { display: flex; align-items: center; gap: 10px; }
-.logo-img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; }
+.logo-img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; }
 .logo h2 { color: var(--primary-color); font-weight: 700; font-size: 1.5rem; }
 
 /* Menu Link di Tengah */
@@ -248,8 +248,8 @@ footer {
 }
 
 .footer-logo .logo-img {
-    height: 45px;
-    width: 45px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--white);
@@ -505,7 +505,7 @@ footer {
     visibility: hidden;
     min-width: 250px;
     background-color: #27ae60;
-    color: #fff;
+    color: #fff;                
     text-align: center;
     border-radius: 25px;
     padding: 15px 20px;
