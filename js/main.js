@@ -20,18 +20,34 @@ if (heroSection) {
 // --- 2. RENDER PRODUK (Hanya jalan di halaman Products) ---
 function renderProducts() {
     const productContainer = document.getElementById('product-list');
-    if (!productContainer) return; // Cegah error di halaman lain
+    if (!productContainer) return; 
 
     productContainer.innerHTML = '';
     products.forEach(product => {
+        
+        // Logika untuk menampilkan harga coret jika ada diskon
+        let originalPriceHtml = '';
+        if (product.originalPrice) {
+            originalPriceHtml = `<span class="price-original">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>`;
+        }
+
         productContainer.innerHTML += `
-            <div class="card">
-                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Gambar+Kosong'">
-                <div style="padding: 20px;">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">${product.name}</h3>
-                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">${product.desc}</p>
-                    <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 15px;">Rp ${product.price.toLocaleString('id-ID')}</p>
-                    <button onclick="openProductModal(${product.id})" class="btn-primary" style="width: 100%;">Pilih Pesanan</button>
+            <div class="card-shop">
+                <div class="card-img-wrapper">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Gambar+Kosong'">
+                </div>
+                <div class="card-body">
+                    <h3>${product.name}</h3>
+                    <div class="price-container">
+                        <span class="price-current">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        ${originalPriceHtml}
+                    </div>
+                    <div class="card-meta">
+                        <span class="rating">⭐ ${product.rating.toFixed(1)}</span>
+                        <span class="divider">|</span>
+                        <span class="sold">${product.sold} Terjual</span>
+                    </div>
+                    <button onclick="openProductModal(${product.id})" class="btn-shop">Pilih Pesanan</button>
                 </div>
             </div>
         `;
