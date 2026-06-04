@@ -75,9 +75,9 @@ body {
 }
 .nav-extra .btn-pesan:hover { background: var(--secondary-color); }
 
-/* --- 3. HERO SECTION (HALAMAN HOME) --- */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1920&q=80') center/cover;
+    /* Gambar Unsplash (donat) diganti dengan gambar Original Mochi lokalmu */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('../images/Original Mochi.jpeg') center/cover;
     height: 80vh;
     display: flex;
     align-items: center;
@@ -85,6 +85,7 @@ body {
     text-align: center;
     color: var(--white);
     padding: 0 20px;
+    transition: background-image 1s ease-in-out;
 }
 
 .hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
