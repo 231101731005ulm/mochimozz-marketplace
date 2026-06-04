@@ -17,10 +17,12 @@
 }
 
 body {
-    background-color: var(--bg-color);
+    /* Memberikan gradient halus agar tidak polos */
+    background: linear-gradient(135deg, #fdfbf7 0%, #f2eae1 100%);
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 /* --- 2. NAVBAR (MENU NAVIGASI MULTI-PAGE) --- */
@@ -495,4 +497,31 @@ footer {
     .modal {
         display: none !important;
     }
+}
+
+/* --- 12. PERBAIKAN TOAST NOTIFICATION (NOTIFIKASI KERANJANG) --- */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #27ae60;
+    color: #fff;
+    text-align: center;
+    border-radius: 25px;
+    padding: 15px 20px;
+    position: fixed;
+    z-index: 3000;
+    left: 50%;
+    bottom: -50px; /* Sembunyi di bawah layar */
+    transform: translateX(-50%);
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.4s, bottom 0.4s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 40px; /* Muncul ke atas */
 }
