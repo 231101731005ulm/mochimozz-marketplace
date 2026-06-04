@@ -3,10 +3,12 @@
 // --- 1. SLIDER BACKGROUND (Hanya jalan di halaman Home) ---
 const heroSection = document.getElementById('hero-section');
 if (heroSection) {
+    // Menggunakan gambar produk mochi asli
     const heroImages = [
-        'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1920&q=80',
-        'https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?auto=format&fit=crop&w=1920&q=80',
-        'https://images.unsplash.com/photo-1603569283847-aa295f0d016a?auto=format&fit=crop&w=1920&q=80'
+        './images/Original Mochi.jpeg',
+        './images/Choco Mochi.jpeg',
+        './images/Matcha Mochi.jpeg',
+        './images/Strawberry Mochi.jpeg'
     ];
     let currentImageIndex = 0;
 
@@ -14,7 +16,8 @@ if (heroSection) {
         currentImageIndex = (currentImageIndex + 1) % heroImages.length;
         heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${heroImages[currentImageIndex]}')`;
     }
-    setInterval(changeHeroBackground, 4000);
+    // Ganti gambar setiap 2.5 detik (2500 milidetik)
+    setInterval(changeHeroBackground, 2500);
 }
 
 // --- 2. RENDER PRODUK (Hanya jalan di halaman Products) ---
