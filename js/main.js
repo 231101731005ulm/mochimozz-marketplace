@@ -114,3 +114,69 @@ window.onclick = function(event) {
 }
 
 document.addEventListener("DOMContentLoaded", renderProducts);
+
+// --- 5. LOGIKA RATING & ULASAN (Menggunakan LocalStorage) ---
+
+// Berikan 2 ulasan awal (dummy) agar website tidak kosong melompong saat pertama dibuka
+const defaultReviews = [
+    { id: 1, name: "Amanda Sari", rating: 5, text: "Konsepnya unik banget! Baru pertama kali makan mochi digoreng, dan mozzarella-nya beneran lumer parah. Suka banget!", date: "10/06/2026" },
+    { id: 2, name: "Budi Santoso", rating: 4, text: "Matcha-nya kerasa premium, ukurannya juga lumayan bikin kenyang. Recommended buat temen ngopi.", date: "11/06/2026" }
+];
+
+// Ambil data dari memori browser, kalau kosong pakai defaultReviews
+let reviews = JSON.parse(localStorage.getItem('mochiReviews')) || defaultReviews;
+
+// Fungsi menampilkan ulasan ke layar
+function renderReviews() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return; // Mencegah error jika bukan di halaman index.html
+
+    container.innerHTML = '';
+    // Tampilkan ulasan dari yang terbaru (reverse)
+    [...reviews].reverse().forEach(rev => {
+        let stars = '⭐'.repeat(rev.rating); // Mengubah angka 5 menjadi ⭐⭐⭐⭐⭐
+        container.innerHTML += `
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="review-name">${rev.name}</span>
+                    <span class="review-stars">${stars}</span>
+                </div>
+                <p class="review-text">"${rev.text}"</p>
+                <span class="review-date">${rev.date}</span>
+            </div>
+        `;
+    });
+}
+
+// Fungsi menyimpan ulasan saat tombol diklik
+function submitReview(event) {
+    event.preventDefault(); // Mencegah halaman ke-refresh
+
+    const name = document.getElementById('reviewer-name').value;
+    const rating = parseInt(document.getElementById('reviewer-rating').value);
+    const text = document.getElementById('reviewer-text').value;
+    
+    // Ambil tanggal hari ini (Format Indonesia)
+    const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const newReview = { id: Date.now(), name, rating, text, date };
+    
+    // Masukkan ke daftar dan simpan ke memori browser
+    reviews.push(newReview);
+    localStorage.setItem('mochiReviews', JSON.stringify(reviews));
+    
+    // Perbarui tampilan web & bersihkan form
+    renderReviews();
+    document.getElementById('review-form').reset();
+    
+    // Notifikasi berhasil
+    alert('Terima kasih! Ulasan Anda berhasil ditambahkan. ⭐');
+}
+
+// Render ulasan otomatis saat halaman selesai dimuat
+document.addEventListener("DOMContentLoaded", () => {
+    // Memastikan renderProducts jalan jika ada (dari kode sebelumnya)
+    if (typeof renderProducts === "function") renderProducts();
+    // Jalankan render ulasan
+    renderReviews();
+});
