@@ -185,3 +185,34 @@ function processPayment(event) {
     document.getElementById('cart-modal').style.display = "none";
     showCartView();
 }
+
+// ==========================================
+// FUNGSI BUKA & TUTUP JENDELA KERANJANG
+// ==========================================
+
+const cartBtn = document.getElementById('cart-btn');
+const cartModal = document.getElementById('cart-modal');
+
+// 1. Membuka Keranjang saat Tombol Diklik
+if (cartBtn) {
+    cartBtn.addEventListener('click', () => {
+        if (cartModal) {
+            cartModal.style.display = 'block';
+            showCartView(); // Pastikan selalu buka halaman list keranjang dulu
+        }
+    });
+}
+
+// 2. Fungsi Menutup Keranjang (Untuk Tombol X)
+function closeModal() {
+    if (cartModal) {
+        cartModal.style.display = 'none';
+    }
+}
+
+// 3. BONUS UX: Tutup Keranjang jika area gelap di luarnya diklik
+window.addEventListener('click', function(event) {
+    if (event.target === cartModal) {
+        cartModal.style.display = 'none';
+    }
+});
