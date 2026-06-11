@@ -17,7 +17,6 @@ function showToast(message) {
 }
 
 function saveCart() {
-    // Simpan keranjang ke memori browser
     localStorage.setItem('mochiCart', JSON.stringify(cart));
 }
 
@@ -31,56 +30,74 @@ function addToCart(productId, qtyToAdd = 1) {
         cart.push({ ...product, qty: qtyToAdd });
     }
     
-    saveCart(); // Simpan perubahan
+    saveCart(); 
     updateCartUI();
     showToast(`${qtyToAdd}x ${product.name} masuk keranjang! 🛒`);
 }
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
-    saveCart(); // Simpan perubahan
+    saveCart(); 
     updateCartUI();
 }
 
+// --- SISTEM KERANJANG DENGAN DISKON ---
 function updateCartUI() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
     const cartTotal = document.getElementById('cart-total');
     const btnProceed = document.getElementById('btn-proceed');
     
-    let total = 0;
+    let grandTotal = 0;
     let count = 0;
 
-    // Hitung total dulu untuk angka di tombol keranjang navbar
-    cart.forEach(item => {
-        total += item.price * item.qty;
-        count += item.qty;
-    });
-
+    // Hitung total porsi untuk angka di badge navbar
+    cart.forEach(item => count += item.qty);
     if(cartCount) cartCount.innerText = count;
 
-    // Jika elemen UI keranjang (di dalam modal) ada, perbarui juga
     if(cartItemsContainer && cartTotal && btnProceed) {
         cartItemsContainer.innerHTML = '';
         
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p>Keranjang masih kosong.</p>';
             btnProceed.style.display = 'none';
+            cartTotal.innerText = `Rp 0`;
         } else {
             btnProceed.style.display = 'block';
+            
             cart.forEach(item => {
+                // 1. Kalkulator Diskon Bertingkat
+                let discountPercent = 0;
+                if (item.qty >= 4) discountPercent = 20;
+                else if (item.qty >= 2) discountPercent = 10;
+
+                const subtotal = item.price * item.qty;
+                const discountAmount = subtotal * (discountPercent / 100);
+                const finalPrice = subtotal - discountAmount;
+
+                grandTotal += finalPrice; // Masukkan ke Total Akhir
+
+                // 2. Desain Tampilan Harga
+                let promoBadge = '';
+                let priceDisplay = `Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}`;
+                
+                if (discountPercent > 0) {
+                    promoBadge = `<span style="color: #27ae60; font-size: 0.75rem; background: #e8f5e9; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; vertical-align: middle;">Diskon ${discountPercent}%</span>`;
+                    priceDisplay = `<span style="text-decoration: line-through; color: #999; margin-right: 5px;">Rp ${subtotal.toLocaleString('id-ID')}</span> <strong style="color: var(--primary-color); font-size: 0.95rem;">Rp ${finalPrice.toLocaleString('id-ID')}</strong>`;
+                }
+
                 cartItemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <h4 style="margin-bottom:5px;">${item.name}</h4>
-                            <p>Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}</p>
+                    <div class="cart-item" style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; align-items: center;">
+                        <div style="flex-grow: 1;">
+                            <h4 style="margin-bottom:5px;">${item.name} ${promoBadge}</h4>
+                            <p style="margin: 0;">${priceDisplay}</p>
                         </div>
-                        <button type="button" class="btn-secondary" style="padding: 5px 10px;" onclick="removeFromCart(${item.id})">Hapus</button>
+                        <button type="button" class="btn-secondary" style="padding: 5px 10px; margin-left: 10px;" onclick="removeFromCart(${item.id})">Hapus</button>
                     </div>
                 `;
             });
+            cartTotal.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
         }
-        cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
     }
 }
 
@@ -94,6 +111,7 @@ function showCartView() {
     document.getElementById('cart-view').style.display = 'block';
 }
 
+// --- SISTEM CETAK STRUK DENGAN DISKON ---
 function processPayment(event) {
     event.preventDefault();
 
@@ -108,16 +126,27 @@ function processPayment(event) {
     const date = new Date().toLocaleString('id-ID');
     const orderId = 'INV-' + Math.floor(Math.random() * 1000000);
     
-    let total = 0;
+    let grandTotal = 0;
     let itemHtml = '';
 
     cart.forEach(item => {
-        let subtotal = item.price * item.qty;
-        total += subtotal;
+        // Logika Diskon sama seperti di Keranjang
+        let discountPercent = 0;
+        if (item.qty >= 4) discountPercent = 20;
+        else if (item.qty >= 2) discountPercent = 10;
+
+        const subtotal = item.price * item.qty;
+        const discountAmount = subtotal * (discountPercent / 100);
+        const finalPrice = subtotal - discountAmount;
+
+        grandTotal += finalPrice;
+
+        let discountInfo = discountPercent > 0 ? `<br><small style="font-size: 10px;">(Termasuk Diskon ${discountPercent}%)</small>` : '';
+
         itemHtml += `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <span>${item.name} (x${item.qty})</span>
-                <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; align-items: start;">
+                <span style="flex: 1;">${item.name} (x${item.qty}) ${discountInfo}</span>
+                <span>Rp ${finalPrice.toLocaleString('id-ID')}</span>
             </div>
         `;
     });
@@ -138,7 +167,7 @@ function processPayment(event) {
         </div>
         <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
             <span>TOTAL:</span>
-            <span>Rp ${total.toLocaleString('id-ID')}</span>
+            <span>Rp ${grandTotal.toLocaleString('id-ID')}</span>
         </div>
         <div style="text-align: center; margin-top: 20px; font-size: 12px;">
             <h3 style="margin: 0;">-- LUNAS --</h3>
@@ -148,7 +177,7 @@ function processPayment(event) {
 
     window.print();
 
-    // Reset keranjang dari UI dan Memori Browser setelah sukses cetak
+    // Reset keranjang
     cart = [];
     saveCart();
     updateCartUI();
