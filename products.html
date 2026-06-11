@@ -117,7 +117,13 @@
             <img id="modal-img" src="" alt="Product">
             <h2 id="modal-title">Nama Produk</h2>
             <p id="modal-desc" class="desc">Deskripsi</p>
-            <h3 id="modal-price" class="price">Rp 0</h3>
+            <div id="modal-price-wrapper" style="margin-bottom: 15px; text-align: center;">
+                <div id="modal-promo-badge" style="color: #e74c3c; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; padding: 5px; border-radius: 5px; background-color: #fdf0ed;">
+                    ✨ Promo: Beli 2 Diskon 10%, Beli 4 Diskon 20%! ✨
+                </div>
+                <span id="modal-price-original" style="text-decoration: line-through; color: #999; font-size: 1rem; margin-right: 10px; display: none;">Rp 0</span>
+                <span id="modal-price" class="price" style="font-size: 1.5rem; color: var(--primary-color); font-weight: bold;">Rp 0</span>
+            </div>
             
             <div id="modal-reviews-list" class="modal-reviews-container">
                 </div>
