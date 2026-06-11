@@ -190,29 +190,51 @@ function processPayment(event) {
 // FUNGSI BUKA & TUTUP JENDELA KERANJANG
 // ==========================================
 
-const cartBtn = document.getElementById('cart-btn');
-const cartModal = document.getElementById('cart-modal');
-
-// 1. Membuka Keranjang saat Tombol Diklik
-if (cartBtn) {
-    cartBtn.addEventListener('click', () => {
-        if (cartModal) {
-            cartModal.style.display = 'block';
-            showCartView(); // Pastikan selalu buka halaman list keranjang dulu
-        }
-    });
+function openCartModal() {
+    const cartModal = document.getElementById('cart-modal');
+    if (cartModal) {
+        cartModal.style.display = 'block';
+        showCartView(); // Pastikan selalu buka halaman list keranjang dulu
+    } else {
+        console.error("Modal keranjang tidak ditemukan di HTML.");
+    }
 }
 
-// 2. Fungsi Menutup Keranjang (Untuk Tombol X)
-function closeModal() {
+function closeCartModal() {
+    const cartModal = document.getElementById('cart-modal');
     if (cartModal) {
         cartModal.style.display = 'none';
     }
 }
 
-// 3. BONUS UX: Tutup Keranjang jika area gelap di luarnya diklik
-window.addEventListener('click', function(event) {
-    if (event.target === cartModal) {
-        cartModal.style.display = 'none';
+// ==========================================
+// FUNGSI INFO PEMBAYARAN DINAMIS (QRIS / VA)
+// ==========================================
+
+function togglePaymentInfo() {
+    const method = document.getElementById('payment-method').value;
+    const infoContainer = document.getElementById('payment-info-container');
+    
+    if (!infoContainer) return;
+
+    if (method === 'QRIS') {
+        infoContainer.style.display = 'block';
+        infoContainer.innerHTML = `
+            <h4 style="margin-bottom: 10px; color: #333;">Scan QRIS</h4>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS Dummy" style="width: 150px; height: 150px; margin: 0 auto; display: block; border: 5px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px;">
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">Atas Nama: <strong>Crispy Mochizza</strong><br>Silakan scan menggunakan GoPay, OVO, Dana, atau M-Banking Anda.</p>
+        `;
+    } else if (method === 'Transfer Bank') {
+        infoContainer.style.display = 'block';
+        infoContainer.innerHTML = `
+            <h4 style="margin-bottom: 10px; color: #333;">Transfer Virtual Account</h4>
+            <div style="background: var(--primary-color); color: white; padding: 10px; border-radius: 5px; font-size: 1.3rem; font-weight: bold; letter-spacing: 3px; width: fit-content; margin: 0 auto;">
+                1234-5678-9012
+            </div>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">Bank BCA a.n. <strong>Crispy Mochizza</strong><br>Pesanan akan otomatis diproses setelah transfer berhasil.</p>
+        `;
+    } else {
+        infoContainer.style.display = 'none';
+        infoContainer.innerHTML = '';
     }
-});
+}
