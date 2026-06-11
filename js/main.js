@@ -115,66 +115,69 @@ window.onclick = function(event) {
 
 document.addEventListener("DOMContentLoaded", renderProducts);
 
-// --- 5. LOGIKA RATING & ULASAN (Menggunakan LocalStorage) ---
-
-// Berikan 2 ulasan awal (dummy) agar website tidak kosong melompong saat pertama dibuka
+// --- LOGIKA DATA ULASAN (Ada ID Produknya) ---
 const defaultReviews = [
-    { id: 1, name: "Amanda Sari", rating: 5, text: "Konsepnya unik banget! Baru pertama kali makan mochi digoreng, dan mozzarella-nya beneran lumer parah. Suka banget!", date: "10/06/2026" },
-    { id: 2, name: "Budi Santoso", rating: 4, text: "Matcha-nya kerasa premium, ukurannya juga lumayan bikin kenyang. Recommended buat temen ngopi.", date: "11/06/2026" }
+    { id: 1, productId: 1, name: "Amanda Sari", rating: 5, text: "Konsepnya unik banget! Baru pertama kali makan mochi digoreng, dan mozzarella-nya beneran lumer parah.", date: "10/06/2026" },
+    { id: 2, productId: 3, name: "Budi Santoso", rating: 4, text: "Matcha-nya kerasa premium, ukurannya juga lumayan bikin kenyang. Recommended!", date: "11/06/2026" }
 ];
 
-// Ambil data dari memori browser, kalau kosong pakai defaultReviews
 let reviews = JSON.parse(localStorage.getItem('mochiReviews')) || defaultReviews;
 
-// Fungsi menampilkan ulasan ke layar
-function renderReviews() {
-    const container = document.getElementById('reviews-container');
-    if (!container) return; 
-
-    container.innerHTML = '';
-    // Tampilkan ulasan dari yang terbaru (reverse)
-    [...reviews].reverse().forEach(rev => {
-        let stars = '⭐'.repeat(rev.rating); 
-        container.innerHTML += `
-            <div class="review-card">
-                <div class="review-header" style="align-items: flex-start;">
-                    <div>
-                        <span class="review-name">${rev.name}</span>
-                        <div class="review-stars">${stars}</div>
-                    </div>
-                    <!-- Tombol Hapus Khusus Prototype -->
-                    <button onclick="deleteReview(${rev.id})" class="btn-delete-review" title="Hapus Ulasan (Admin)">🗑️</button>
-                </div>
-                <p class="review-text">"${rev.text}"</p>
-                <span class="review-date">${rev.date}</span>
-            </div>
-        `;
-    });
-}
-
-// Fungsi menyimpan ulasan saat tombol diklik
 function submitReview(event) {
-    event.preventDefault(); // Mencegah halaman ke-refresh
-
+    event.preventDefault(); 
     const name = document.getElementById('reviewer-name').value;
+    const productId = parseInt(document.getElementById('reviewer-product').value); // Ambil ID Produk
     const rating = parseInt(document.getElementById('reviewer-rating').value);
     const text = document.getElementById('reviewer-text').value;
-    
-    // Ambil tanggal hari ini (Format Indonesia)
     const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    const newReview = { id: Date.now(), name, rating, text, date };
+    const newReview = { id: Date.now(), productId, name, rating, text, date };
     
-    // Masukkan ke daftar dan simpan ke memori browser
     reviews.push(newReview);
     localStorage.setItem('mochiReviews', JSON.stringify(reviews));
     
-    // Perbarui tampilan web & bersihkan form
     renderReviews();
     document.getElementById('review-form').reset();
-    
-    // Notifikasi berhasil
     alert('Terima kasih! Ulasan Anda berhasil ditambahkan. ⭐');
+}
+
+// --- LOGIKA JENDELA (MODAL) PRODUK ---
+function openProductModal(id) {
+    const product = products.find(p => p.id === id);
+    selectedProductId = id;
+    
+    document.getElementById('modal-img').src = product.image;
+    document.getElementById('modal-title').innerText = product.name;
+    document.getElementById('modal-desc').innerText = product.desc;
+    document.getElementById('modal-price').innerText = `Rp ${product.price.toLocaleString('id-ID')}`;
+    document.getElementById('modal-qty').value = 1;
+    
+    // FILTER DAN TAMPILKAN ULASAN SPESIFIK PRODUK INI SAJA
+    const modalReviewsContainer = document.getElementById('modal-reviews-list');
+    if (modalReviewsContainer) {
+        // Cari ulasan yang productId-nya cocok dengan produk yang sedang diklik
+        const productReviews = reviews.filter(r => r.productId === id);
+        
+        if (productReviews.length === 0) {
+            modalReviewsContainer.innerHTML = '<p style="text-align:center; color:#999; font-size:0.85rem; margin-top:10px;">Belum ada ulasan untuk varian ini. Jadilah yang pertama!</p>';
+        } else {
+            modalReviewsContainer.innerHTML = '<h4 style="font-size:0.95rem; margin-bottom:10px; color:var(--primary-color);">Ulasan Varian Ini:</h4>';
+            productReviews.reverse().forEach(rev => {
+                let stars = '⭐'.repeat(rev.rating);
+                modalReviewsContainer.innerHTML += `
+                    <div class="mini-review">
+                        <div class="mini-review-head">
+                            <span class="mini-review-name">${rev.name}</span>
+                            <span class="mini-review-stars">${stars}</span>
+                        </div>
+                        <p class="mini-review-text">"${rev.text}"</p>
+                    </div>
+                `;
+            });
+        }
+    }
+    
+    productModal.style.display = 'block';
 }
 
 // Fungsi untuk menghapus ulasan (Khusus Prototype)
