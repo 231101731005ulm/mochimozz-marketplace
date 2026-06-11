@@ -129,17 +129,21 @@ let reviews = JSON.parse(localStorage.getItem('mochiReviews')) || defaultReviews
 // Fungsi menampilkan ulasan ke layar
 function renderReviews() {
     const container = document.getElementById('reviews-container');
-    if (!container) return; // Mencegah error jika bukan di halaman index.html
+    if (!container) return; 
 
     container.innerHTML = '';
     // Tampilkan ulasan dari yang terbaru (reverse)
     [...reviews].reverse().forEach(rev => {
-        let stars = '⭐'.repeat(rev.rating); // Mengubah angka 5 menjadi ⭐⭐⭐⭐⭐
+        let stars = '⭐'.repeat(rev.rating); 
         container.innerHTML += `
             <div class="review-card">
-                <div class="review-header">
-                    <span class="review-name">${rev.name}</span>
-                    <span class="review-stars">${stars}</span>
+                <div class="review-header" style="align-items: flex-start;">
+                    <div>
+                        <span class="review-name">${rev.name}</span>
+                        <div class="review-stars">${stars}</div>
+                    </div>
+                    <!-- Tombol Hapus Khusus Prototype -->
+                    <button onclick="deleteReview(${rev.id})" class="btn-delete-review" title="Hapus Ulasan (Admin)">🗑️</button>
                 </div>
                 <p class="review-text">"${rev.text}"</p>
                 <span class="review-date">${rev.date}</span>
@@ -171,6 +175,19 @@ function submitReview(event) {
     
     // Notifikasi berhasil
     alert('Terima kasih! Ulasan Anda berhasil ditambahkan. ⭐');
+}
+
+// Fungsi untuk menghapus ulasan (Khusus Prototype)
+function deleteReview(id) {
+    // Munculkan peringatan sebelum menghapus
+    if(confirm("Yakin ingin menghapus ulasan ini?")) {
+        // Saring (filter) dan buang ulasan yang ID-nya cocok
+        reviews = reviews.filter(rev => rev.id !== id);
+        // Simpan sisa ulasan ke memori
+        localStorage.setItem('mochiReviews', JSON.stringify(reviews));
+        // Perbarui tampilan layar
+        renderReviews();
+    }
 }
 
 // Render ulasan otomatis saat halaman selesai dimuat
