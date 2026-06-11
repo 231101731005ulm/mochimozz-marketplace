@@ -27,11 +27,10 @@
         
         <!-- Tombol Keranjang -->
         <div class="nav-extra">
-            <button id="cart-btn" class="btn-pesan" style="cursor: pointer; border: none; font-size: 1rem;">
+            <button id="cart-btn" class="btn-pesan" style="cursor: pointer; border: none; font-size: 1rem;" onclick="openCartModal()">
                 🛒 Keranjang (<span id="cart-count">0</span>)
             </button>
         </div>
-    </nav>
 
 <!-- AREA TOKO (SIDEBAR & KATALOG) -->
     <section class="section-padding" style="padding-top: 40px;">
@@ -160,15 +159,17 @@
                     <div class="input-group">
                         <input type="text" id="cust-name" placeholder="Nama Pemesan" required>
                     </div>
-                    <div class="input-group">
-                        <select id="payment-method" required>
+                   <div class="input-group">
+                        <select id="payment-method" required onchange="togglePaymentInfo()">
                             <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                            <option value="QRIS">QRIS</option>
-                            <option value="Transfer BCA">Transfer Bank BCA</option>
-                            <option value="GoPay">GoPay</option>
+                            <option value="QRIS">QRIS / GoPay</option>
+                            <option value="Transfer Bank">Transfer Bank BCA</option>
                             <option value="Tunai">Tunai di Kasir</option>
                         </select>
                     </div>
+
+                    <div id="payment-info-container" style="display: none; margin-top: 15px; text-align: center; padding: 15px; border: 2px dashed var(--primary-color); border-radius: 8px; background-color: #fffaf5;">
+                        </div>
                     <button type="submit" class="btn-pesan" style="width: 100%; border:none; padding:15px; font-size:1.1rem; cursor:pointer;">Proses & Cetak Struk</button>
                     <button type="button" class="btn-secondary" style="width: 100%;" onclick="showCartView()">Kembali ke Keranjang</button>
                 </form>
