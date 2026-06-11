@@ -162,6 +162,23 @@ function updateModalPriceAndDiscount() {
     }
 }
 
+// --- FUNGSI MENUTUP JENDELA PESANAN ---
+function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// BONUS UX: Tutup jendela saat area gelap di luar kotak diklik
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('product-modal');
+    // Jika yang diklik adalah background gelap (modal), bukan kontennya
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
 const modalAddBtn = document.getElementById('modal-add-btn');
 if(modalAddBtn) {
     modalAddBtn.onclick = function() {
