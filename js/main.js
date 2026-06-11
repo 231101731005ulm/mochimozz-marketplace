@@ -115,18 +115,57 @@ window.onclick = function(event) {
 
 document.addEventListener("DOMContentLoaded", renderProducts);
 
-// --- LOGIKA DATA ULASAN (Ada ID Produknya) ---
+// =========================================================
+// SISTEM ULASAN & MODAL PRODUK (CROSS-CHECK FINAL)
+// =========================================================
+
+// 1. Data Dummy (Sekarang wajib ada productId)
 const defaultReviews = [
     { id: 1, productId: 1, name: "Amanda Sari", rating: 5, text: "Konsepnya unik banget! Baru pertama kali makan mochi digoreng, dan mozzarella-nya beneran lumer parah.", date: "10/06/2026" },
     { id: 2, productId: 3, name: "Budi Santoso", rating: 4, text: "Matcha-nya kerasa premium, ukurannya juga lumayan bikin kenyang. Recommended!", date: "11/06/2026" }
 ];
 
-let reviews = JSON.parse(localStorage.getItem('mochiReviews')) || defaultReviews;
+// 2. Gunakan kunci 'mochiReviewsV2' agar tidak bentrok dengan data error lama
+let reviews = JSON.parse(localStorage.getItem('mochiReviewsV2')) || defaultReviews;
 
+// 3. Fungsi Menampilkan Ulasan di Halaman Utama (Home)
+function renderReviews() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return; 
+
+    container.innerHTML = '';
+    [...reviews].reverse().forEach(rev => {
+        let stars = '⭐'.repeat(rev.rating); 
+        container.innerHTML += `
+            <div class="review-card">
+                <div class="review-header" style="align-items: flex-start;">
+                    <div>
+                        <span class="review-name">${rev.name}</span>
+                        <div class="review-stars">${stars}</div>
+                    </div>
+                    <button onclick="deleteReview(${rev.id})" class="btn-delete-review" title="Hapus Ulasan">🗑️</button>
+                </div>
+                <p class="review-text">"${rev.text}"</p>
+                <span class="review-date">${rev.date}</span>
+            </div>
+        `;
+    });
+}
+
+// 4. Fungsi Hapus Ulasan
+function deleteReview(id) {
+    if(confirm("Yakin ingin menghapus ulasan ini?")) {
+        reviews = reviews.filter(rev => rev.id !== id);
+        localStorage.setItem('mochiReviewsV2', JSON.stringify(reviews));
+        renderReviews();
+    }
+}
+
+// 5. Fungsi Kirim Ulasan Baru
 function submitReview(event) {
     event.preventDefault(); 
     const name = document.getElementById('reviewer-name').value;
-    const productId = parseInt(document.getElementById('reviewer-product').value); // Ambil ID Produk
+    const productId = parseInt(document.getElementById('reviewer-product').value);
     const rating = parseInt(document.getElementById('reviewer-rating').value);
     const text = document.getElementById('reviewer-text').value;
     const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -134,14 +173,14 @@ function submitReview(event) {
     const newReview = { id: Date.now(), productId, name, rating, text, date };
     
     reviews.push(newReview);
-    localStorage.setItem('mochiReviews', JSON.stringify(reviews));
+    localStorage.setItem('mochiReviewsV2', JSON.stringify(reviews));
     
     renderReviews();
     document.getElementById('review-form').reset();
     alert('Terima kasih! Ulasan Anda berhasil ditambahkan. ⭐');
 }
 
-// --- LOGIKA JENDELA (MODAL) PRODUK ---
+// 6. Fungsi Buka Modal Produk & Filter Ulasan Sesuai ID
 function openProductModal(id) {
     const product = products.find(p => p.id === id);
     selectedProductId = id;
@@ -152,10 +191,9 @@ function openProductModal(id) {
     document.getElementById('modal-price').innerText = `Rp ${product.price.toLocaleString('id-ID')}`;
     document.getElementById('modal-qty').value = 1;
     
-    // FILTER DAN TAMPILKAN ULASAN SPESIFIK PRODUK INI SAJA
+    // Tampilkan Ulasan Spesifik Produk
     const modalReviewsContainer = document.getElementById('modal-reviews-list');
     if (modalReviewsContainer) {
-        // Cari ulasan yang productId-nya cocok dengan produk yang sedang diklik
         const productReviews = reviews.filter(r => r.productId === id);
         
         if (productReviews.length === 0) {
@@ -177,26 +215,11 @@ function openProductModal(id) {
         }
     }
     
-    productModal.style.display = 'block';
+    document.getElementById('product-modal').style.display = 'block';
 }
 
-// Fungsi untuk menghapus ulasan (Khusus Prototype)
-function deleteReview(id) {
-    // Munculkan peringatan sebelum menghapus
-    if(confirm("Yakin ingin menghapus ulasan ini?")) {
-        // Saring (filter) dan buang ulasan yang ID-nya cocok
-        reviews = reviews.filter(rev => rev.id !== id);
-        // Simpan sisa ulasan ke memori
-        localStorage.setItem('mochiReviews', JSON.stringify(reviews));
-        // Perbarui tampilan layar
-        renderReviews();
-    }
-}
-
-// Render ulasan otomatis saat halaman selesai dimuat
+// 7. Pemicu Awal Saat Web Dibuka
 document.addEventListener("DOMContentLoaded", () => {
-    // Memastikan renderProducts jalan jika ada (dari kode sebelumnya)
     if (typeof renderProducts === "function") renderProducts();
-    // Jalankan render ulasan
     renderReviews();
 });
