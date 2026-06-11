@@ -77,6 +77,14 @@
             <h3>Tinggalkan Ulasanmu</h3>
             <form id="review-form" onsubmit="submitReview(event)">
                 <input type="text" id="reviewer-name" placeholder="Nama Anda" required>
+                <select id="reviewer-product" required>
+                    <option value="" disabled selected>Pilih Produk yang Diulas...</option>
+                    <option value="1">Original Mozza</option>
+                    <option value="2">Chocolate Lava</option>
+                    <option value="3">Matcha Melt</option>
+                    <option value="4">Strawberry Cloud</option>
+                </select>
+
                 <select id="reviewer-rating" required>
                     <option value="" disabled selected>Pilih Bintang...</option>
                     <option value="5">⭐⭐⭐⭐⭐ Sangat Puas</option>
