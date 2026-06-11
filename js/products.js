@@ -24,7 +24,7 @@ const products = [
         id: 3, 
         name: 'Matcha Melt', 
         price: 18000, 
-        originalPrice:, 
+        originalPrice: 20000, 
         rating: 4.8,
         sold: 850,
         image: './images/Box Matcha Mochi.jpeg', 
