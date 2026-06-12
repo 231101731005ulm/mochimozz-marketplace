@@ -111,7 +111,7 @@ function showCartView() {
     document.getElementById('cart-view').style.display = 'block';
 }
 
-// --- SISTEM CETAK STRUK DENGAN DISKON ---
+// --- SISTEM PEMBAYARAN & STRUK DIGITAL ---
 function processPayment(event) {
     event.preventDefault();
 
@@ -122,7 +122,7 @@ function processPayment(event) {
 
     const name = document.getElementById('cust-name').value;
     const method = document.getElementById('payment-method').value;
-    const receiptContainer = document.getElementById('print-receipt');
+    const paperContainer = document.getElementById('thermal-paper-container'); // Ambil wadah struk baru
     const date = new Date().toLocaleString('id-ID');
     const orderId = 'INV-' + Math.floor(Math.random() * 1000000);
     
@@ -130,7 +130,6 @@ function processPayment(event) {
     let itemHtml = '';
 
     cart.forEach(item => {
-        // Logika Diskon sama seperti di Keranjang
         let discountPercent = 0;
         if (item.qty >= 4) discountPercent = 20;
         else if (item.qty >= 2) discountPercent = 10;
@@ -141,15 +140,66 @@ function processPayment(event) {
 
         grandTotal += finalPrice;
 
-        let discountInfo = discountPercent > 0 ? `<br><small style="font-size: 10px;">(Termasuk Diskon ${discountPercent}%)</small>` : '';
+        let discountInfo = discountPercent > 0 ? `<br><small style="font-size: 11px; color: #e74c3c;">(Diskon ${discountPercent}%)</small>` : '';
 
         itemHtml += `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; align-items: start;">
-                <span style="flex: 1;">${item.name} (x${item.qty}) ${discountInfo}</span>
+            <div class="thermal-item">
+                <span style="flex: 1; padding-right: 10px;">${item.name} (x${item.qty}) ${discountInfo}</span>
                 <span>Rp ${finalPrice.toLocaleString('id-ID')}</span>
             </div>
         `;
     });
+
+    // Desain Injeksi Struk Kertas Termal
+    if (paperContainer) {
+        paperContainer.innerHTML = `
+            <div class="thermal-header">
+                <h2>CRISPY MOCHIZZA</h2>
+                <p>Banjarbaru, Kalimantan Selatan</p>
+                <p>${date}</p>
+            </div>
+            <div class="thermal-info">
+                <p><strong>No. Order :</strong> ${orderId}</p>
+                <p><strong>Pelanggan :</strong> ${name}</p>
+                <p><strong>Pembayaran:</strong> ${method}</p>
+            </div>
+            <div class="thermal-items">
+                ${itemHtml}
+            </div>
+            <div class="thermal-total">
+                <span>TOTAL</span>
+                <span>Rp ${grandTotal.toLocaleString('id-ID')}</span>
+            </div>
+            <div class="thermal-footer">
+                <h3>-- LUNAS --</h3>
+                <p style="font-size: 0.85rem; margin-top: 5px;">Terima kasih telah berbelanja!</p>
+                <p style="font-size: 0.7rem; color: #94a3b8; margin-top: 5px;">*Tunjukkan struk digital ini kepada kasir</p>
+            </div>
+        `;
+    }
+
+    // Reset Semua Data & Tutup Kasir
+    cart = [];
+    saveCart();
+    updateCartUI();
+    document.getElementById('checkout-form').reset();
+    document.getElementById('payment-info-container').style.display = 'none'; // Tutup QRIS
+    
+    // Tutup Modal Keranjang
+    document.getElementById('cart-modal').style.display = "none";
+    showCartView(); // Kembalikan ke tampilan default
+
+    // BUKA MODAL STRUK DIGITAL
+    const receiptModal = document.getElementById('digital-receipt-modal');
+    if (receiptModal) receiptModal.style.display = 'block';
+}
+
+// Fungsi Menutup Struk Digital
+function closeReceiptModal() {
+    const receiptModal = document.getElementById('digital-receipt-modal');
+    if (receiptModal) receiptModal.style.display = 'none';
+    showToast("Pesanan Selesai! 🎉");
+}
 
     receiptContainer.innerHTML = `
         <div style="text-align: center; border-bottom: 1px dashed black; padding-bottom: 10px; margin-bottom: 10px;">
