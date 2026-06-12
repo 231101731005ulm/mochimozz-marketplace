@@ -245,3 +245,43 @@ function togglePaymentInfo() {
         infoContainer.innerHTML = '';
     }
 }
+
+// Fungsi Khusus Mencetak Struk (PDF)
+function printReceipt() {
+    // Ambil isi HTML dari kotak struk saja
+    const receiptContent = document.getElementById('thermal-paper-container').innerHTML;
+    
+    // Buka jendela tab baru sementara
+    const printWindow = window.open('', '', 'height=600,width=400');
+    
+    // Tuliskan struktur HTML sederhana beserta CSS dasar struk ke jendela baru
+    printWindow.document.write('<html><head><title>Struk Crispy Mochizza</title>');
+    printWindow.document.write(`
+        <style>
+            body { font-family: 'Courier New', Courier, monospace; color: #000; padding: 20px; }
+            .thermal-header { text-align: center; border-bottom: 1px dashed #000; padding-bottom: 15px; margin-bottom: 15px; }
+            .thermal-header h2 { margin: 0 0 5px 0; font-size: 1.5rem; }
+            .thermal-header p { margin: 0; font-size: 0.85rem; }
+            .thermal-info p { margin: 4px 0; font-size: 0.9rem; }
+            .thermal-items { border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 15px 0; margin: 15px 0; }
+            .thermal-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
+            .thermal-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; }
+            .thermal-footer { text-align: center; margin-top: 25px; font-size: 0.9rem;}
+            .thermal-footer h3 { margin: 0; font-size: 1.2rem; }
+        </style>
+    `);
+    printWindow.document.write('</head><body>');
+    
+    // Masukkan isi struknya
+    printWindow.document.write(receiptContent);
+    printWindow.document.write('</body></html>');
+    
+    printWindow.document.close();
+    
+    // Perintahkan tab baru untuk memunculkan menu Print PDF lalu tutup otomatis
+    printWindow.focus();
+    setTimeout(function() {
+        printWindow.print();
+        printWindow.close();
+    }, 250); 
+}
