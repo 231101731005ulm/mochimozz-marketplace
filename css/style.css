@@ -669,3 +669,91 @@ footer {
     transform: scale(1.1);
 }
 
+/* ========================================= */
+/* DESAIN STRUK KASIR DIGITAL (KERTAS TERMAL)*/
+/* ========================================= */
+.receipt-modal-content {
+    background-color: #f1f5f9; /* Warna latar luar abu-abu lembut */
+    max-width: 450px;
+    padding: 30px 20px;
+    border-radius: 12px;
+}
+
+.thermal-paper {
+    background-color: #fff;
+    padding: 25px 20px;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Efek bayangan kertas */
+    font-family: 'Courier New', Courier, monospace; /* Font khas struk kasir */
+    color: #1e293b;
+    margin-bottom: 25px;
+    border-top: 6px dashed #cbd5e1; /* Efek sobekan kertas atas */
+    border-bottom: 6px dashed #cbd5e1; /* Efek sobekan kertas bawah */
+}
+
+.thermal-header {
+    text-align: center;
+    border-bottom: 1px dashed #94a3b8;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.thermal-header h2 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+    margin: 0 0 5px 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+}
+
+.thermal-header p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-family: 'Poppins', sans-serif;
+}
+
+.thermal-info p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+
+.thermal-items {
+    border-top: 1px dashed #94a3b8;
+    border-bottom: 1px dashed #94a3b8;
+    padding: 15px 0;
+    margin: 15px 0;
+}
+
+.thermal-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    align-items: flex-start;
+}
+
+.thermal-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+    color: #000;
+}
+
+.thermal-footer {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.thermal-footer h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #16a085; /* Warna hijau lunas */
+}
+
+.receipt-actions {
+    display: flex;
+    gap: 15px;
+}
