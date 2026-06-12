@@ -26,12 +26,13 @@
         </ul>
         
         <!-- Tombol Keranjang -->
-        <div class="nav-extra">
+       <div class="nav-extra">
             <button id="cart-btn" class="btn-pesan" style="cursor: pointer; border: none; font-size: 1rem;" onclick="openCartModal()">
                 🛒 Keranjang (<span id="cart-count">0</span>)
             </button>
         </div>
-
+    </nav> 
+    
 <!-- AREA TOKO (SIDEBAR & KATALOG) -->
     <section class="section-padding" style="padding-top: 40px;">
         <div class="shop-container">
@@ -140,7 +141,7 @@
     <!-- MODAL KERANJANG & CHECKOUT -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeCartModal()">&times;</span>
             
             <div id="cart-view">
                 <h2>Keranjang Belanja</h2>
