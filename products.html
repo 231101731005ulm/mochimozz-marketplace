@@ -179,7 +179,21 @@
     </div>
 
     <!-- CETAK STRUK -->
-    <div id="print-receipt" class="receipt-container"></div>
+    <!-- MODAL STRUK DIGITAL (E-RECEIPT) -->
+    <div id="digital-receipt-modal" class="modal">
+        <div class="modal-content receipt-modal-content">
+            <div id="thermal-paper-container" class="thermal-paper">
+                <!-- Data Struk Akan Dimasukkan JavaScript Di Sini -->
+            </div>
+            
+            <div class="receipt-actions">
+                <!-- Tombol Cetak Manual -->
+                <button onclick="window.print()" class="btn-secondary" style="flex: 1; padding: 12px; font-size: 1rem;">🖨️ Cetak PDF</button>
+                <!-- Tombol Selesai Belanja -->
+                <button onclick="closeReceiptModal()" class="btn-primary" style="flex: 1; padding: 12px; font-size: 1rem;">Selesai</button>
+            </div>
+        </div>
+    </div>
 
     <script src="./js/products.js"></script>
     <script src="./js/cart.js"></script>
