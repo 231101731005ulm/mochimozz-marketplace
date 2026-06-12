@@ -51,7 +51,6 @@ function updateCartUI() {
     let grandTotal = 0;
     let count = 0;
 
-    // Hitung total porsi untuk angka di badge navbar
     cart.forEach(item => count += item.qty);
     if(cartCount) cartCount.innerText = count;
 
@@ -66,7 +65,6 @@ function updateCartUI() {
             btnProceed.style.display = 'block';
             
             cart.forEach(item => {
-                // 1. Kalkulator Diskon Bertingkat
                 let discountPercent = 0;
                 if (item.qty >= 4) discountPercent = 20;
                 else if (item.qty >= 2) discountPercent = 10;
@@ -75,9 +73,8 @@ function updateCartUI() {
                 const discountAmount = subtotal * (discountPercent / 100);
                 const finalPrice = subtotal - discountAmount;
 
-                grandTotal += finalPrice; // Masukkan ke Total Akhir
+                grandTotal += finalPrice;
 
-                // 2. Desain Tampilan Harga
                 let promoBadge = '';
                 let priceDisplay = `Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}`;
                 
@@ -122,7 +119,7 @@ function processPayment(event) {
 
     const name = document.getElementById('cust-name').value;
     const method = document.getElementById('payment-method').value;
-    const paperContainer = document.getElementById('thermal-paper-container'); // Ambil wadah struk baru
+    const paperContainer = document.getElementById('thermal-paper-container'); 
     const date = new Date().toLocaleString('id-ID');
     const orderId = 'INV-' + Math.floor(Math.random() * 1000000);
     
@@ -150,7 +147,6 @@ function processPayment(event) {
         `;
     });
 
-    // Desain Injeksi Struk Kertas Termal
     if (paperContainer) {
         paperContainer.innerHTML = `
             <div class="thermal-header">
@@ -178,62 +174,23 @@ function processPayment(event) {
         `;
     }
 
-    // Reset Semua Data & Tutup Kasir
     cart = [];
     saveCart();
     updateCartUI();
     document.getElementById('checkout-form').reset();
-    document.getElementById('payment-info-container').style.display = 'none'; // Tutup QRIS
+    document.getElementById('payment-info-container').style.display = 'none'; 
     
-    // Tutup Modal Keranjang
     document.getElementById('cart-modal').style.display = "none";
-    showCartView(); // Kembalikan ke tampilan default
+    showCartView(); 
 
-    // BUKA MODAL STRUK DIGITAL
     const receiptModal = document.getElementById('digital-receipt-modal');
     if (receiptModal) receiptModal.style.display = 'block';
 }
 
-// Fungsi Menutup Struk Digital
 function closeReceiptModal() {
     const receiptModal = document.getElementById('digital-receipt-modal');
     if (receiptModal) receiptModal.style.display = 'none';
     showToast("Pesanan Selesai! 🎉");
-}
-
-    receiptContainer.innerHTML = `
-        <div style="text-align: center; border-bottom: 1px dashed black; padding-bottom: 10px; margin-bottom: 10px;">
-            <h2 style="margin: 0; font-size: 18px;">CRISPY MOCHIZZA</h2>
-            <p style="margin: 5px 0 0 0;">Banjarbaru, Kalimantan Selatan</p>
-            <p style="margin: 0; font-size: 10px;">${date}</p>
-        </div>
-        <div style="margin-bottom: 15px; font-size: 12px;">
-            <p style="margin: 2px 0;"><strong>No:</strong> ${orderId}</p>
-            <p style="margin: 2px 0;"><strong>Nama:</strong> ${name}</p>
-            <p style="margin: 2px 0;"><strong>Bayar:</strong> ${method}</p>
-        </div>
-        <div style="border-bottom: 1px dashed black; padding-bottom: 10px; margin-bottom: 10px; font-size: 12px;">
-            ${itemHtml}
-        </div>
-        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
-            <span>TOTAL:</span>
-            <span>Rp ${grandTotal.toLocaleString('id-ID')}</span>
-        </div>
-        <div style="text-align: center; margin-top: 20px; font-size: 12px;">
-            <h3 style="margin: 0;">-- LUNAS --</h3>
-            <p style="margin: 5px 0 0 0;">Terima kasih atas pesanan Anda!</p>
-        </div>
-    `;
-
-    window.print();
-
-    // Reset keranjang
-    cart = [];
-    saveCart();
-    updateCartUI();
-    document.getElementById('checkout-form').reset();
-    document.getElementById('cart-modal').style.display = "none";
-    showCartView();
 }
 
 // ==========================================
@@ -244,7 +201,7 @@ function openCartModal() {
     const cartModal = document.getElementById('cart-modal');
     if (cartModal) {
         cartModal.style.display = 'block';
-        showCartView(); // Pastikan selalu buka halaman list keranjang dulu
+        showCartView(); 
     } else {
         console.error("Modal keranjang tidak ditemukan di HTML.");
     }
