@@ -27,10 +27,30 @@ const defaultReviews = [
 
 let reviews = JSON.parse(localStorage.getItem('mochiReviewsV3')) || defaultReviews;
 
+// --- LOGIKA DATA ULASAN & RATING ---
 function renderReviews() {
     const container = document.getElementById('reviews-container');
+    const summaryContainer = document.getElementById('rating-summary'); // Ambil wadah kumulatif
+    
     if (!container) return; 
 
+    // 1. Hitung Rating Kumulatif
+    if (summaryContainer) {
+        if (reviews.length > 0) {
+            const totalStars = reviews.reduce((sum, rev) => sum + rev.rating, 0);
+            const avgRating = (totalStars / reviews.length).toFixed(1);
+            
+            document.getElementById('avg-rating-number').innerText = avgRating;
+            document.getElementById('total-reviews-count').innerText = `Berdasarkan ${reviews.length} ulasan pelanggan`;
+            document.getElementById('avg-stars').innerText = '⭐'.repeat(Math.round(avgRating));
+            
+            summaryContainer.style.display = 'flex'; // Munculkan kotak
+        } else {
+            summaryContainer.style.display = 'none'; // Sembunyikan jika kosong
+        }
+    }
+
+    // 2. Cetak Daftar Ulasan
     container.innerHTML = '';
     if (reviews.length === 0) {
         container.innerHTML = '<p style="text-align:center; width:100%;">Belum ada ulasan. Jadilah yang pertama!</p>';
