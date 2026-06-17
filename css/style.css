@@ -757,3 +757,59 @@ footer {
     display: flex;
     gap: 15px;
 }
+
+/* ========================================= */
+/* KUMULATIF RATING (KATA MEREKA)            */
+/* ========================================= */
+.rating-summary-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.15); /* Bayangan tipis warna oranye */
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #fdf0ed;
+}
+
+.rating-score {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    border-right: 2px solid #e2e8f0;
+    padding-right: 20px;
+}
+
+.rating-score h3 {
+    font-size: 3.5rem;
+    margin: 0;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.rating-score .out-of {
+    font-size: 1.1rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.rating-details {
+    text-align: left;
+}
+
+.rating-details .stars {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.rating-details p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #64748b;
+}
